@@ -6,9 +6,9 @@ import java.util.Random;
 import java.util.Vector;
 
 
-public class Space {
+public class Game {
 	
-public Vector<Particle> particles;
+public Vector<Ball> particles;
 public Vector<Pocket> pockets;
 public Vector<TableSide> sides;
 public Random rand;
@@ -55,9 +55,9 @@ public enum group_of_balls{
 }
 
 
-public Space(){
+public Game(){
 	rand=new Random();
-	particles=new Vector<Particle>();
+	particles=new Vector<Ball>();
 	pockets=new Vector<Pocket>();
 	sides=new Vector<TableSide>();
 	
@@ -161,56 +161,56 @@ public Space(){
 	int selection;
 	
 	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4+dx,table_edge[3]/2+dy,0,0,ball_diameter,options.get(selection)));
+	particles.add(new Ball(table_edge[2]/4+dx,table_edge[3]/2+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	
 	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4-ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	particles.add(new Ball(table_edge[2]/4-ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4-ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
-	options.remove(selection);
-	
-	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4-2*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
-	options.remove(selection);
-	particles.add(new Particle(table_edge[2]/4-2*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+dy,0,0,ball_diameter,8));
-	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4-2*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	particles.add(new Ball(table_edge[2]/4-ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	
 	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-3*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	particles.add(new Ball(table_edge[2]/4-2*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
+	particles.add(new Ball(table_edge[2]/4-2*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+dy,0,0,ball_diameter,8));
 	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
-	options.remove(selection);
-	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
-	options.remove(selection);
-	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+3*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	particles.add(new Ball(table_edge[2]/4-2*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	
 	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-4*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	particles.add(new Ball(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-3*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	particles.add(new Ball(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+dy,0,0,ball_diameter,options.get(selection)));
+	particles.add(new Ball(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	particles.add(new Ball(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+3*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	options.remove(selection);
+	
+	selection=rand.nextInt(options.size());
+	particles.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-4*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	selection=rand.nextInt(options.size());
-	particles.add(new Particle(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+4*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	particles.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	options.remove(selection);
+	selection=rand.nextInt(options.size());
+	particles.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+dy,0,0,ball_diameter,options.get(selection)));
+	options.remove(selection);
+	selection=rand.nextInt(options.size());
+	particles.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	options.remove(selection);
+	selection=rand.nextInt(options.size());
+	particles.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+4*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	
 	Collections.shuffle(particles);
 	
-	//particles.add(0,new Particle(3*table_edge[2]/4+dx,table_edge[3]/2+dy,0,0,ball_diameter,0,0));
+	//particles.add(0,new Ball(3*table_edge[2]/4+dx,table_edge[3]/2+dy,0,0,ball_diameter,0,0));
 	
 	table_edge[0]+=dx;
 	table_edge[1]+=dy;
@@ -361,7 +361,7 @@ public void update_table_collisions() {
 	}
 }
 
-public void check_table_collision(Particle p, TableSide s) {
+public void check_table_collision(Ball p, TableSide s) {
 	double vector_x=0;
 	double vector_y=0;
 

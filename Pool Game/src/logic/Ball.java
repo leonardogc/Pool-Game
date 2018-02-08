@@ -2,7 +2,7 @@ package logic;
 
 import java.awt.Color;
 
-public class Particle {
+public class Ball {
 	public double pos[];
 	public double vel[];
 	public double acc[];
@@ -13,7 +13,7 @@ public class Particle {
 	public int number;
 	
 
-	public Particle(double posX,double posY,double velX,double velY,double diameter, int number){
+	public Ball(double posX,double posY,double velX,double velY,double diameter, int number){
 		this.pos = new double[2];
 		this.vel = new double[2];
 		this.acc = new double[2];

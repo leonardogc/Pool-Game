@@ -2,7 +2,8 @@ package gui;
 
 import java.awt.event.WindowEvent;
 
-import logic.Space.gameState;
+import logic.Game.gameState;
+
 
 public class LoopThread extends Thread{
 	
@@ -38,8 +39,8 @@ public class LoopThread extends Thread{
 	        while(running){
 	        	startTime= System.nanoTime();
 	        	
-	        	if(g.space.state==gameState.BallsMoving) {
-	        		g.space.update(1/max_fps);
+	        	if(g.game.state==gameState.BallsMoving) {
+	        		g.game.update(1/max_fps);
 	        	}
 	        	
 	        	g.repaint();
