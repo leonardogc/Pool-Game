@@ -43,6 +43,8 @@ public class GraphicInterface{
 		
 		cli.getOutputStream().write("accepted".getBytes());
 		
+		cli.getOutputStream().write("1".getBytes());
+		
 		cli.close();
 		ts.close();
 		
@@ -66,6 +68,8 @@ public class GraphicInterface{
 		int player2Port = cli.getPort();
 		
 		cli.getOutputStream().write("accepted".getBytes());
+		
+		cli.getOutputStream().write("2".getBytes());
 		
 		cli.close();
 		ts.close();
