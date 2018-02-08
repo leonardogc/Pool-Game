@@ -319,10 +319,8 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(game.state!=gameState.BallsMoving) {
         	x=e.getX();
         	y=e.getY();
-        }
 	}
 
 }
