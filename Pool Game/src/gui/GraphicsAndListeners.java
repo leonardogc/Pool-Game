@@ -81,14 +81,14 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 					(int)(game.pocket_diameter));
 		}
 		
-		for(int i=0;i<game.particles.size();i++){
+		for(int i=0;i<game.balls.size();i++){
 
-			g.setColor(game.particles.get(i).color);
+			g.setColor(game.balls.get(i).color);
 
-			g.fillOval((int)(game.particles.get(i).pos[0]-game.particles.get(i).diameter/2),
-					(int)(game.particles.get(i).pos[1]-game.particles.get(i).diameter/2),
-					(int)(game.particles.get(i).diameter), 
-					(int)(game.particles.get(i).diameter));
+			g.fillOval((int)(game.balls.get(i).pos[0]-game.balls.get(i).diameter/2),
+					(int)(game.balls.get(i).pos[1]-game.balls.get(i).diameter/2),
+					(int)(game.balls.get(i).diameter), 
+					(int)(game.balls.get(i).diameter));
 		}
 		
 		for(int i=0;i<game.sides.size();i++){
@@ -108,27 +108,27 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 
 		if(game.state == gameState.ChoosingDir) {
 			g.setColor(Color.RED);
-			double vector_x=x-game.particles.get(0).pos[0];
-			double vector_y=y-game.particles.get(0).pos[1];
+			double vector_x=x-game.balls.get(0).pos[0];
+			double vector_y=y-game.balls.get(0).pos[1];
 
 			double vector_size=Math.sqrt(Math.pow(vector_x,2)+Math.pow(vector_y,2));
 
 			vector_x/=vector_size;
 			vector_y/=vector_size;
 
-			g.drawLine((int)game.particles.get(0).pos[0],(int)game.particles.get(0).pos[1], (int)(game.particles.get(0).pos[0]+vector_x*1500), (int)(game.particles.get(0).pos[1]+vector_y*1500));
+			g.drawLine((int)game.balls.get(0).pos[0],(int)game.balls.get(0).pos[1], (int)(game.balls.get(0).pos[0]+vector_x*1500), (int)(game.balls.get(0).pos[1]+vector_y*1500));
 		}
 		else if(game.state == gameState.ChoosingVel) {
 			g.setColor(Color.RED);
-			g.drawLine((int)game.particles.get(0).pos[0],(int)game.particles.get(0).pos[1], (int)(game.particles.get(0).pos[0]+vel_vector_x*line_size), (int)(game.particles.get(0).pos[1]+vel_vector_y*line_size));
+			g.drawLine((int)game.balls.get(0).pos[0],(int)game.balls.get(0).pos[1], (int)(game.balls.get(0).pos[0]+vel_vector_x*line_size), (int)(game.balls.get(0).pos[1]+vel_vector_y*line_size));
 			g.setColor(Color.GREEN);
-			double size= vel_vector_x*(x-game.particles.get(0).pos[0])+vel_vector_y*(y-game.particles.get(0).pos[1]);
+			double size= vel_vector_x*(x-game.balls.get(0).pos[0])+vel_vector_y*(y-game.balls.get(0).pos[1]);
 			
 			if(size > line_size) {
-				g.drawLine((int)game.particles.get(0).pos[0],(int)game.particles.get(0).pos[1], (int)(game.particles.get(0).pos[0]+vel_vector_x*line_size), (int)(game.particles.get(0).pos[1]+vel_vector_y*line_size));
+				g.drawLine((int)game.balls.get(0).pos[0],(int)game.balls.get(0).pos[1], (int)(game.balls.get(0).pos[0]+vel_vector_x*line_size), (int)(game.balls.get(0).pos[1]+vel_vector_y*line_size));
 			}
 			else if(size <= line_size && size > 0) {
-				g.drawLine((int)game.particles.get(0).pos[0],(int)game.particles.get(0).pos[1], (int)(game.particles.get(0).pos[0]+vel_vector_x*size), (int)(game.particles.get(0).pos[1]+vel_vector_y*size));
+				g.drawLine((int)game.balls.get(0).pos[0],(int)game.balls.get(0).pos[1], (int)(game.balls.get(0).pos[0]+vel_vector_x*size), (int)(game.balls.get(0).pos[1]+vel_vector_y*size));
 			}
 		}else if(game.state == gameState.MovingQueueBall) {
 			g.setColor(Color.RED);
@@ -214,8 +214,8 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 		graphics.panel.requestFocusInWindow();
 		
 		if(game.state == gameState.ChoosingDir) {
-			vel_vector_x=x-game.particles.get(0).pos[0];
-			vel_vector_y=y-game.particles.get(0).pos[1];
+			vel_vector_x=x-game.balls.get(0).pos[0];
+			vel_vector_y=y-game.balls.get(0).pos[1];
 			
 			double vector_size=Math.sqrt(Math.pow(vel_vector_x,2)+Math.pow(vel_vector_y,2));
 			
@@ -224,14 +224,14 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 			game.state = gameState.ChoosingVel;
 		}
 		else if(game.state == gameState.ChoosingVel) {
-			double size= vel_vector_x*(x-game.particles.get(0).pos[0])+vel_vector_y*(y-game.particles.get(0).pos[1]);
+			double size= vel_vector_x*(x-game.balls.get(0).pos[0])+vel_vector_y*(y-game.balls.get(0).pos[1]);
 			
 			if(size > line_size) {
-				game.particles.get(0).vel[0]=vel_vector_x*game.max_speed;
-				game.particles.get(0).vel[1]=vel_vector_y*game.max_speed;
+				game.balls.get(0).vel[0]=vel_vector_x*game.max_speed;
+				game.balls.get(0).vel[1]=vel_vector_y*game.max_speed;
 			}else if(size <= line_size && size > 0){
-				game.particles.get(0).vel[0]=vel_vector_x*(size/line_size)*game.max_speed;
-				game.particles.get(0).vel[1]=vel_vector_y*(size/line_size)*game.max_speed;
+				game.balls.get(0).vel[0]=vel_vector_x*(size/line_size)*game.max_speed;
+				game.balls.get(0).vel[1]=vel_vector_y*(size/line_size)*game.max_speed;
 			}
 			
 			game.hit_ball=false;
@@ -244,8 +244,8 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 		else if(game.state == gameState.MovingQueueBall) {
 			boolean valid=true;
 			
-			for(int i=0; i< game.particles.size(); i++) {
-				if(Math.sqrt(Math.pow(game.particles.get(i).pos[0]-x,2) + Math.pow(game.particles.get(i).pos[1]-y,2)) < game.ball_diameter){
+			for(int i=0; i< game.balls.size(); i++) {
+				if(Math.sqrt(Math.pow(game.balls.get(i).pos[0]-x,2) + Math.pow(game.balls.get(i).pos[1]-y,2)) < game.ball_diameter){
 					valid=false;
 					break;
 				}
@@ -259,7 +259,7 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 			}
 
 			if(valid) {
-				game.particles.add(0,new Ball(x,y,0,0,game.ball_diameter,0));
+				game.balls.add(0,new Ball(x,y,0,0,game.ball_diameter,0));
 				game.state = gameState.ChoosingDir;
 			}
 		}
@@ -271,11 +271,11 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 					y < game.table_edge[1]+game.ball_diameter/2)) {
 
 				if(x < game.table_edge[2]-(game.table_edge[2]-game.table_edge[0])/4) {
-					game.particles.add(0,new Ball(game.table_edge[2]-(game.table_edge[2]-game.table_edge[0])/4,y,0,0,game.ball_diameter,0));
+					game.balls.add(0,new Ball(game.table_edge[2]-(game.table_edge[2]-game.table_edge[0])/4,y,0,0,game.ball_diameter,0));
 					game.state = gameState.ChoosingDir;
 				}
 				else {
-					game.particles.add(0,new Ball(x,y,0,0,game.ball_diameter,0));
+					game.balls.add(0,new Ball(x,y,0,0,game.ball_diameter,0));
 					game.state = gameState.ChoosingDir;
 				}
 			}

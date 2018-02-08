@@ -8,7 +8,7 @@ import java.util.Vector;
 
 public class Game {
 	
-public Vector<Ball> particles;
+public Vector<Ball> balls;
 public Vector<Pocket> pockets;
 public Vector<TableSide> sides;
 public Random rand;
@@ -57,7 +57,7 @@ public enum group_of_balls{
 
 public Game(){
 	rand=new Random();
-	particles=new Vector<Ball>();
+	balls=new Vector<Ball>();
 	pockets=new Vector<Pocket>();
 	sides=new Vector<TableSide>();
 	
@@ -161,54 +161,54 @@ public Game(){
 	int selection;
 	
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4+dx,table_edge[3]/2+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4+dx,table_edge[3]/2+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4-ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4-ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4-ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4-ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4-2*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4-2*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
-	particles.add(new Ball(table_edge[2]/4-2*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+dy,0,0,ball_diameter,8));
+	balls.add(new Ball(table_edge[2]/4-2*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+dy,0,0,ball_diameter,8));
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4-2*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4-2*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-3*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-3*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+3*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4-3*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+3*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-4*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-4*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2-2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+2*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	selection=rand.nextInt(options.size());
-	particles.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+4*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
+	balls.add(new Ball(table_edge[2]/4-4*ball_diameter*Math.cos(Math.PI/6)+dx,table_edge[3]/2+4*ball_diameter*Math.sin(Math.PI/6)+dy,0,0,ball_diameter,options.get(selection)));
 	options.remove(selection);
 	
-	Collections.shuffle(particles);
+	Collections.shuffle(balls);
 	
 	//particles.add(0,new Ball(3*table_edge[2]/4+dx,table_edge[3]/2+dy,0,0,ball_diameter,0,0));
 	
@@ -220,7 +220,9 @@ public Game(){
 
 public void update(double t){
 	updateAcc_Vel_Pos(t);
-	update_collisions();
+	update_ball_collisions();
+	update_table_collisions();
+	update_hole_collisions();
 	update_game_state();
 }
 
@@ -240,9 +242,9 @@ public void update_game_state() {
 		}
 		
 		if(!hit_player_ball_first) {
-			for(int i =0 ; i< particles.size(); i++) {
-				if(particles.get(i).number==0) {
-					particles.remove(i);
+			for(int i =0 ; i< balls.size(); i++) {
+				if(balls.get(i).number==0) {
+					balls.remove(i);
 					break;
 				}
 			}
@@ -264,44 +266,26 @@ public void update_game_state() {
 	}
 }
 
-public void update_collisions(){
-	int next=1;
-	while(true) {
-		if(next==1) {
-			next=update_collisions_1();
-		}
-		else if(next == 2) {
-			next=update_collisions_2();
-		}
-		else {
-			break;
-		}
-	}
-	
-	update_table_collisions();
-	update_hole_collisions();
-}
-
 public void update_hole_collisions() {
-	for(int i=0;i< particles.size();i++){
+	for(int i=0;i< balls.size();i++){
 		for(int i2=0; i2 < pockets.size(); i2++) {
-			if(Math.sqrt(Math.pow(particles.get(i).pos[0]-pockets.get(i2).pos[0],2) + Math.pow(particles.get(i).pos[1]-pockets.get(i2).pos[1],2)) < pocket_diameter/2) {
+			if(Math.sqrt(Math.pow(balls.get(i).pos[0]-pockets.get(i2).pos[0],2) + Math.pow(balls.get(i).pos[1]-pockets.get(i2).pos[1],2)) < pocket_diameter/2) {
 				
 				if(player1 == group_of_balls.Not_picked) {
 					if(player1_turn) {
-						if(particles.get(i).number>=1 && particles.get(i).number<=7) {
+						if(balls.get(i).number>=1 && balls.get(i).number<=7) {
 							player1=group_of_balls.Group_1;
 							player_ball_in_pocket=true;
-						}else if(particles.get(i).number>=9 && particles.get(i).number<=15) {
+						}else if(balls.get(i).number>=9 && balls.get(i).number<=15) {
 							player1=group_of_balls.Group_2;
 							player_ball_in_pocket=true;
 						}
 					}
 					else {
-						if(particles.get(i).number>=1 && particles.get(i).number<=7) {
+						if(balls.get(i).number>=1 && balls.get(i).number<=7) {
 							player1=group_of_balls.Group_2;
 							player_ball_in_pocket=true;
-						}else if(particles.get(i).number>=9 && particles.get(i).number<=15) {
+						}else if(balls.get(i).number>=9 && balls.get(i).number<=15) {
 							player1=group_of_balls.Group_1;
 							player_ball_in_pocket=true;
 						}
@@ -310,42 +294,42 @@ public void update_hole_collisions() {
 				else {
 					if(player1_turn) {
 						if(player1 == group_of_balls.Group_1) {
-							if(particles.get(i).number>=1 && particles.get(i).number<=7) {
+							if(balls.get(i).number>=1 && balls.get(i).number<=7) {
 								player_ball_in_pocket=true;
 							}
 						}else if(player1 == group_of_balls.Group_2) {
-							if(particles.get(i).number>=9 && particles.get(i).number<=15) {
+							if(balls.get(i).number>=9 && balls.get(i).number<=15) {
 								player_ball_in_pocket=true;
 							}
 						}
 					}
 					else {
 						if(player1 == group_of_balls.Group_1) {
-							if(particles.get(i).number>=9 && particles.get(i).number<=15) {
+							if(balls.get(i).number>=9 && balls.get(i).number<=15) {
 								player_ball_in_pocket=true;
 							}
 						}else if(player1 == group_of_balls.Group_2) {
-							if(particles.get(i).number>=1 && particles.get(i).number<=7) {
+							if(balls.get(i).number>=1 && balls.get(i).number<=7) {
 								player_ball_in_pocket=true;
 							}
 						}
 					}
 				}
 
-				if(particles.get(i).number == 0) {
+				if(balls.get(i).number == 0) {
 					ball_0_in_pocket=true;
 				}
-				else if(particles.get(i).number == 8) {
+				else if(balls.get(i).number == 8) {
 					ball_8_in_pocket=true;
 				}
 				
-				if(particles.get(i).number>=1 && particles.get(i).number<=7) {
+				if(balls.get(i).number>=1 && balls.get(i).number<=7) {
 					balls_left_group_1--;
-				}else if(particles.get(i).number>=9 && particles.get(i).number<=15) {
+				}else if(balls.get(i).number>=9 && balls.get(i).number<=15) {
 					balls_left_group_2--;
 				}
 				
-				particles.remove(i);
+				balls.remove(i);
 				i--;
 				break;
 			}
@@ -354,9 +338,9 @@ public void update_hole_collisions() {
 }
 
 public void update_table_collisions() {
-	for(int i=0;i< particles.size();i++){
+	for(int i=0;i< balls.size();i++){
 		for(int i2=0; i2 < sides.size(); i2++) {
-			check_table_collision(particles.get(i), sides.get(i2));
+			check_table_collision(balls.get(i), sides.get(i2));
 		}
 	}
 }
@@ -670,7 +654,7 @@ public void check_table_collision(Ball p, TableSide s) {
 }
 
 
-public int update_collisions_1(){
+public void update_ball_collisions(){
 	double dx;
 	double dy;
 	double r;
@@ -685,25 +669,25 @@ public int update_collisions_1(){
 	double proportion1=0.5;
 	double proportion2=0.5;
 	double extra = 0.01;
-	double versor[] = new double[2];
+	int ball_number=-1;
 
 
-	for(int i =0;i< particles.size();i++){
-		for(int i2=i+1;i2<particles.size();i2++){	
+	for(int i =0;i< balls.size();i++){
+		for(int i2=i+1;i2<balls.size();i2++){	
 
-			dx=particles.get(i).pos[0]-particles.get(i2).pos[0];
-			dy=particles.get(i).pos[1]-particles.get(i2).pos[1];
+			dx=balls.get(i).pos[0]-balls.get(i2).pos[0];
+			dy=balls.get(i).pos[1]-balls.get(i2).pos[1];
 			r=Math.sqrt(dx*dx+dy*dy);
-			targetDistance=(particles.get(i).diameter+particles.get(i2).diameter)/2;
+			targetDistance=(balls.get(i).diameter+balls.get(i2).diameter)/2;
 
 			if(r<targetDistance){
 
 				ex[0]=dx/r;
 				ex[1]=dy/r;
 
-				v1_ex=particles.get(i).vel[0]*ex[0]+particles.get(i).vel[1]*ex[1];
+				v1_ex=balls.get(i).vel[0]*ex[0]+balls.get(i).vel[1]*ex[1];
 
-				v2_ex=particles.get(i2).vel[0]*ex[0]+particles.get(i2).vel[1]*ex[1];
+				v2_ex=balls.get(i2).vel[0]*ex[0]+balls.get(i2).vel[1]*ex[1];
 				
 				
 				v2_ex_after=v1_ex;
@@ -725,401 +709,131 @@ public int update_collisions_1(){
 					proportion2=1;
 				}
 
-				particles.get(i).vel[0]=particles.get(i).vel[0]+((v1_ex_after - v1_ex)*ex[0]);
-				particles.get(i).vel[1]=particles.get(i).vel[1]+((v1_ex_after - v1_ex)*ex[1]);
+				balls.get(i).vel[0]=balls.get(i).vel[0]+((v1_ex_after - v1_ex)*ex[0]);
+				balls.get(i).vel[1]=balls.get(i).vel[1]+((v1_ex_after - v1_ex)*ex[1]);
 
-				particles.get(i2).vel[0]=particles.get(i2).vel[0]+((v2_ex_after - v2_ex)*ex[0]);
-				particles.get(i2).vel[1]=particles.get(i2).vel[1]+((v2_ex_after - v2_ex)*ex[1]);
-
-
-				versor[0] = dx/r;
-				versor[1] = dy/r;
+				balls.get(i2).vel[0]=balls.get(i2).vel[0]+((v2_ex_after - v2_ex)*ex[0]);
+				balls.get(i2).vel[1]=balls.get(i2).vel[1]+((v2_ex_after - v2_ex)*ex[1]);
 
 
-				x=((targetDistance + extra)-r)*versor[0];
-				y=((targetDistance + extra)-r)*versor[1];
+				x=((targetDistance + extra)-r)*ex[0];
+				y=((targetDistance + extra)-r)*ex[1];
 
 
-				particles.get(i).pos[0]=particles.get(i).pos[0]+proportion1*x;
-				particles.get(i2).pos[0]=particles.get(i2).pos[0]-proportion2*x;
+				balls.get(i).pos[0]=balls.get(i).pos[0]+proportion1*x;
+				balls.get(i2).pos[0]=balls.get(i2).pos[0]-proportion2*x;
 
-				particles.get(i).pos[1]=particles.get(i).pos[1]+proportion1*y;
-				particles.get(i2).pos[1]=particles.get(i2).pos[1]-proportion2*y;
-
-				if(!hit_player_ball_first && !hit_ball) {
-					if(particles.get(i).number==0) {
-						if(player1_turn) {
-							if(player1 == group_of_balls.Group_1) {
-								if(balls_left_group_1==0) {
-									if(particles.get(i2).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i2).number>=1 && particles.get(i2).number<=7) {
-										hit_player_ball_first=true;
-									}
-								}
-							}else if(player1 == group_of_balls.Group_2) {
-								if(balls_left_group_2==0) {
-									if(particles.get(i2).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i2).number>=9 && particles.get(i2).number<=15) {
-										hit_player_ball_first=true;
-									}
-								}
-							}
-							else {
-								hit_player_ball_first=true;
-							}
-						}
-						else {
-							if(player1 == group_of_balls.Group_1) {
-								if(balls_left_group_2==0) {
-									if(particles.get(i2).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i2).number>=9 && particles.get(i2).number<=15) {
-										hit_player_ball_first=true;
-									}
-								}
-							}else if(player1 == group_of_balls.Group_2) {
-								if(balls_left_group_1==0) {
-									if(particles.get(i2).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i2).number>=1 && particles.get(i2).number<=7) {
-										hit_player_ball_first=true;
-									}
-								}
-							}
-							else {
-								hit_player_ball_first=true;
-							}
-						}
-						hit_ball=true;
-					}
-					else if(particles.get(i2).number==0) {
-						if(player1_turn) {
-							if(player1 == group_of_balls.Group_1) {
-								if(balls_left_group_1==0) {
-									if(particles.get(i).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i).number>=1 && particles.get(i).number<=7) {
-										hit_player_ball_first=true;
-									}
-								}
-							}else if(player1 == group_of_balls.Group_2) {
-								if(balls_left_group_2==0) {
-									if(particles.get(i).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i).number>=9 && particles.get(i).number<=15) {
-										hit_player_ball_first=true;
-									}
-								}
-							}
-							else {
-								hit_player_ball_first=true;
-							}
-						}
-						else {
-							if(player1 == group_of_balls.Group_1) {
-								if(balls_left_group_2==0) {
-									if(particles.get(i).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i).number>=9 && particles.get(i).number<=15) {
-										hit_player_ball_first=true;
-									}
-								}
-							}else if(player1 == group_of_balls.Group_2) {
-								if(balls_left_group_1==0) {
-									if(particles.get(i).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i).number>=1 && particles.get(i).number<=7) {
-										hit_player_ball_first=true;
-									}
-								}
-							}
-							else {
-								hit_player_ball_first=true;
-							}
-						}
-						hit_ball=true;
-					}
-				}
-
-				if(i > particles.size()/2) {
-					return 2;
-				}
-				else {
-					return 1;
-				}
-			}
-		}		
-	}
-
-	return 0;
-}
-
-public int update_collisions_2(){
-	double dx;
-	double dy;
-	double r;
-	double x;
-	double y;
-	double ex[]=new double[2];
-	double v1_ex;
-	double v2_ex;
-	double v1_ex_after=0;
-	double v2_ex_after=0;
-	double targetDistance;
-	double proportion1=0.5;
-	double proportion2=0.5;
-	double extra = 0.01;
-	double versor[] = new double[2];
-
-
-	for(int i =particles.size()-1;i>=0;i--){
-		for(int i2=i-1;i2>=0;i2--){	
-
-			dx=particles.get(i).pos[0]-particles.get(i2).pos[0];
-			dy=particles.get(i).pos[1]-particles.get(i2).pos[1];
-			r=Math.sqrt(dx*dx+dy*dy);
-			targetDistance=(particles.get(i).diameter+particles.get(i2).diameter)/2;
-
-			if(r<targetDistance){
-
-				ex[0]=dx/r;
-				ex[1]=dy/r;
-
-				v1_ex=particles.get(i).vel[0]*ex[0]+particles.get(i).vel[1]*ex[1];
-
-				v2_ex=particles.get(i2).vel[0]*ex[0]+particles.get(i2).vel[1]*ex[1];
-
-
-				v2_ex_after=v1_ex;
-				v1_ex_after=v2_ex;
-
-				v1_ex_after*=ball_ball_coefficientOfRestitution;
-				v2_ex_after*=ball_ball_coefficientOfRestitution;
-
-				if(Math.abs(v1_ex_after)==Math.abs(v2_ex_after)) {
-					proportion1=0.5;
-					proportion2=0.5;
-				}
-				else if(Math.abs(v1_ex_after) > Math.abs(v2_ex_after)) {
-					proportion1=1;
-					proportion2=0;
-				}
-				else if(Math.abs(v1_ex_after) < Math.abs(v2_ex_after)) {
-					proportion1=0;
-					proportion2=1;
-				}
-
-				particles.get(i).vel[0]=particles.get(i).vel[0]+((v1_ex_after - v1_ex)*ex[0]);
-				particles.get(i).vel[1]=particles.get(i).vel[1]+((v1_ex_after - v1_ex)*ex[1]);
-
-				particles.get(i2).vel[0]=particles.get(i2).vel[0]+((v2_ex_after - v2_ex)*ex[0]);
-				particles.get(i2).vel[1]=particles.get(i2).vel[1]+((v2_ex_after - v2_ex)*ex[1]);
-
-
-				versor[0] = dx/r;
-				versor[1] = dy/r;
-
-
-				x=((targetDistance + extra)-r)*versor[0];
-				y=((targetDistance + extra)-r)*versor[1];
-
-
-				particles.get(i).pos[0]=particles.get(i).pos[0]+proportion1*x;
-				particles.get(i2).pos[0]=particles.get(i2).pos[0]-proportion2*x;
-
-				particles.get(i).pos[1]=particles.get(i).pos[1]+proportion1*y;
-				particles.get(i2).pos[1]=particles.get(i2).pos[1]-proportion2*y;
+				balls.get(i).pos[1]=balls.get(i).pos[1]+proportion1*y;
+				balls.get(i2).pos[1]=balls.get(i2).pos[1]-proportion2*y;
 				
 				if(!hit_player_ball_first && !hit_ball) {
-					if(particles.get(i).number==0) {
-						if(player1_turn) {
-							if(player1 == group_of_balls.Group_1) {
-								if(balls_left_group_1==0) {
-									if(particles.get(i2).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i2).number>=1 && particles.get(i2).number<=7) {
-										hit_player_ball_first=true;
-									}
-								}
-							}else if(player1 == group_of_balls.Group_2) {
-								if(balls_left_group_2==0) {
-									if(particles.get(i2).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i2).number>=9 && particles.get(i2).number<=15) {
-										hit_player_ball_first=true;
-									}
-								}
-							}
-							else {
-								hit_player_ball_first=true;
-							}
-						}
-						else {
-							if(player1 == group_of_balls.Group_1) {
-								if(balls_left_group_2==0) {
-									if(particles.get(i2).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i2).number>=9 && particles.get(i2).number<=15) {
-										hit_player_ball_first=true;
-									}
-								}
-							}else if(player1 == group_of_balls.Group_2) {
-								if(balls_left_group_1==0) {
-									if(particles.get(i2).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i2).number>=1 && particles.get(i2).number<=7) {
-										hit_player_ball_first=true;
-									}
-								}
-							}
-							else {
-								hit_player_ball_first=true;
-							}
-						}
+					if(balls.get(i).number==0 || balls.get(i2).number==0) {
 						hit_ball=true;
-					}
-					else if(particles.get(i2).number==0) {
-						if(player1_turn) {
-							if(player1 == group_of_balls.Group_1) {
-								if(balls_left_group_1==0) {
-									if(particles.get(i).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i).number>=1 && particles.get(i).number<=7) {
-										hit_player_ball_first=true;
-									}
-								}
-							}else if(player1 == group_of_balls.Group_2) {
-								if(balls_left_group_2==0) {
-									if(particles.get(i).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i).number>=9 && particles.get(i).number<=15) {
-										hit_player_ball_first=true;
-									}
-								}
-							}
-							else {
-								hit_player_ball_first=true;
-							}
+						
+						if(balls.get(i).number==0) {
+							ball_number=balls.get(i2).number;
+						}else if(balls.get(i2).number==0) {
+							ball_number=balls.get(i).number;
 						}
-						else {
-							if(player1 == group_of_balls.Group_1) {
-								if(balls_left_group_2==0) {
-									if(particles.get(i).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i).number>=9 && particles.get(i).number<=15) {
-										hit_player_ball_first=true;
-									}
-								}
-							}else if(player1 == group_of_balls.Group_2) {
-								if(balls_left_group_1==0) {
-									if(particles.get(i).number==8) {
-										hit_player_ball_first=true;
-									}
-								}
-								else {
-									if(particles.get(i).number>=1 && particles.get(i).number<=7) {
-										hit_player_ball_first=true;
-									}
-								}
-							}
-							else {
-								hit_player_ball_first=true;
-							}
-						}
-						hit_ball=true;
-					}
-				}
 
-				if(i < particles.size()/2) {
-					return 1;
+						if(player1 == group_of_balls.Group_1) {
+							if(player1_turn) {
+								if(balls_left_group_1 == 0) {
+									if(ball_number == 8) {
+										hit_player_ball_first=true;
+									}
+								}
+								else {
+									if(ball_number>=1 && ball_number<=7) {
+										hit_player_ball_first=true;
+									}
+								}
+							}
+							else {
+								if(balls_left_group_2 == 0) {
+									if(ball_number == 8) {
+										hit_player_ball_first=true;
+									}
+								}
+								else {
+									if(ball_number>=9 && ball_number<=15) {
+										hit_player_ball_first=true;
+									}
+								}
+							}
+						}
+						else if(player1 == group_of_balls.Group_2) {
+							if(player1_turn) {
+								if(balls_left_group_2 == 0) {
+									if(ball_number == 8) {
+										hit_player_ball_first=true;
+									}
+								}
+								else {
+									if(ball_number>=9 && ball_number<=15) {
+										hit_player_ball_first=true;
+									}
+								}
+							}
+							else {
+								if(balls_left_group_1 == 0) {
+									if(ball_number == 8) {
+										hit_player_ball_first=true;
+									}
+								}
+								else {
+									if(ball_number>=1 && ball_number<=7) {
+										hit_player_ball_first=true;
+									}
+								}
+							}
+						}
+						else if(player1 == group_of_balls.Not_picked) {
+							if(ball_number != 8) {
+								hit_player_ball_first=true;
+							}
+						}
+					}
 				}
-				else {
-					return 2;
-				}
+				
+				i=-1;
+				break;
 			}
 		}		
 	}
-
-	return 0;
 }
+
 
 public void updateAcc_Vel_Pos(double t){
 	double vectorSize;
 	int counter=0;
 	
-	for(int i =0;i<particles.size();i++){
-		vectorSize=Math.sqrt(Math.pow(particles.get(i).vel[0],2)+Math.pow(particles.get(i).vel[1],2));
+	for(int i =0;i<balls.size();i++){
+		vectorSize=Math.sqrt(Math.pow(balls.get(i).vel[0],2)+Math.pow(balls.get(i).vel[1],2));
 		if(vectorSize>0){
-		particles.get(i).acc[0]=(-particles.get(i).vel[0]/vectorSize)*9.8*m_to_p*ball_cloth_coefficientOfFriction;
-		particles.get(i).acc[1]=(-particles.get(i).vel[1]/vectorSize)*9.8*m_to_p*ball_cloth_coefficientOfFriction;
+		balls.get(i).acc[0]=(-balls.get(i).vel[0]/vectorSize)*9.8*m_to_p*ball_cloth_coefficientOfFriction;
+		balls.get(i).acc[1]=(-balls.get(i).vel[1]/vectorSize)*9.8*m_to_p*ball_cloth_coefficientOfFriction;
 		}
 		else{
-			particles.get(i).acc[0]=0;
-			particles.get(i).acc[1]=0;
+			balls.get(i).acc[0]=0;
+			balls.get(i).acc[1]=0;
 		}
 
-		particles.get(i).vel[0]=particles.get(i).vel[0]+particles.get(i).acc[0]*t;
-		particles.get(i).vel[1]=particles.get(i).vel[1]+particles.get(i).acc[1]*t;
+		balls.get(i).vel[0]=balls.get(i).vel[0]+balls.get(i).acc[0]*t;
+		balls.get(i).vel[1]=balls.get(i).vel[1]+balls.get(i).acc[1]*t;
 
-		if(Math.abs(particles.get(i).vel[0])<0.2 && Math.abs(particles.get(i).vel[1])<0.2) {
-			particles.get(i).vel[0]=0;
-			particles.get(i).vel[1]=0;
+		if(Math.abs(balls.get(i).vel[0])<0.2 && Math.abs(balls.get(i).vel[1])<0.2) {
+			balls.get(i).vel[0]=0;
+			balls.get(i).vel[1]=0;
 			counter++;
 		}
 
-		particles.get(i).pos[0]=particles.get(i).pos[0]+particles.get(i).vel[0]*t;
-		particles.get(i).pos[1]=particles.get(i).pos[1]+particles.get(i).vel[1]*t;
+		balls.get(i).pos[0]=balls.get(i).pos[0]+balls.get(i).vel[0]*t;
+		balls.get(i).pos[1]=balls.get(i).pos[1]+balls.get(i).vel[1]*t;
 
 	}
 
-	if(counter == particles.size()) {
+	if(counter == balls.size()) {
 		balls_stopped=true;
 	}
 	else {
