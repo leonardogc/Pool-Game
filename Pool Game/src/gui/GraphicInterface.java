@@ -36,6 +36,7 @@ public class GraphicInterface{
 	}
 	
 	
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
