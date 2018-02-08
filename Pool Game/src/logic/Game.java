@@ -210,8 +210,6 @@ public Game(){
 	
 	Collections.shuffle(balls);
 	
-	//particles.add(0,new Ball(3*table_edge[2]/4+dx,table_edge[3]/2+dy,0,0,ball_diameter,0,0));
-	
 	table_edge[0]+=dx;
 	table_edge[1]+=dy;
 	table_edge[2]+=dx;
@@ -345,54 +343,126 @@ public void update_table_collisions() {
 	}
 }
 
-public void check_table_collision(Ball p, TableSide s) {
+public void check_table_collision(Ball b, TableSide s) {
+	if(check_point_table_collision(s.p1, s.p4, s.p2, b)) {
+		return;
+	}
+	if(check_point_table_collision(s.p2, s.p1, s.p3, b)) {
+		return;
+	}
+	if(check_point_table_collision(s.p3, s.p2, s.p4, b)) {
+		return;
+	}
+	if(check_point_table_collision(s.p4, s.p3, s.p1, b)) {
+		return;
+	}
+	
+	if(check_line_table_collision(s.p4, s.p1, b)) {
+		return;
+	}
+	if(check_line_table_collision(s.p1, s.p2, b)) {
+		return;
+	}
+	if(check_line_table_collision(s.p2, s.p3, b)) {
+		return;
+	}
+	if(check_line_table_collision(s.p3, s.p4, b)) {
+		return;
+	}
+}
+
+public boolean check_line_table_collision(double[] p4,double[] p1, Ball b) {
 	double vector_x=0;
 	double vector_y=0;
-
+	
 	double vector_x2=0;
 	double vector_y2=0;
-
-	double vector_x3=0;
-	double vector_y3=0;
-
+	
 	double vector_t=0;
-
-	double ex=0;
-	double ey=0;
-	double et=0;
-
+	
 	double eVel=0;
-
-	double angle1=0;
-	double angle2=0;
-	double angle3=0;
-
+	
 	double x=0;
 	double y=0;
 	double k=0;
-	double distance=0;
+	
+	double distance;
+	
+	vector_x=p1[0]-p4[0];
+	vector_y=p1[1]-p4[1];
 
-	if(Math.sqrt(Math.pow(s.p1[0]-p.pos[0],2) + Math.pow(s.p1[1]-p.pos[1],2)) < ball_diameter/2) {
-		ex=s.p1[0]-p.pos[0];
-		ey=s.p1[1]-p.pos[1];
+	vector_x2=vector_y;
+	vector_y2=-vector_x;
+
+	vector_t=Math.sqrt(Math.pow(vector_x2,2) + Math.pow(vector_y2,2));
+
+	vector_x2/=vector_t;
+	vector_y2/=vector_t;
+
+	eVel=b.vel[0]*vector_x2+b.vel[1]*vector_y2;
+
+	if(eVel < 0) {
+		k=(vector_y2*(b.pos[0]-p4[0])+vector_x2*(p4[1]-b.pos[1]))/(vector_y2*(p1[0]-p4[0])-vector_x2*(p1[1]-p4[1]));
+
+		x=p4[0]+k*(p1[0]-p4[0]);
+		y=p4[1]+k*(p1[1]-p4[1]);
+
+		if(Math.sqrt(Math.pow(b.pos[0]-x,2) + Math.pow(b.pos[1]-y,2)) < ball_diameter/2) {
+			distance=Math.sqrt(Math.pow(p1[0]-p4[0],2) + Math.pow(p1[1]-p4[1],2));
+			if(Math.sqrt(Math.pow(p1[0]-x,2) + Math.pow(p1[1]-y,2)) <= distance && Math.sqrt(Math.pow(p4[0]-x,2) + Math.pow(p4[1]-y,2)) <= distance) {
+				eVel*=ball_side_coefficientOfRestitution;
+				b.vel[0]+=-2*eVel*vector_x2;
+				b.vel[1]+=-2*eVel*vector_y2;
+				return true;
+			}
+		}
+	}
+	
+	return false;
+}
+
+
+public boolean check_point_table_collision(double[] p1,double[] p4,double[] p2, Ball b) {
+	double ex=0;
+	double ey=0;
+	double et=0;
+	
+	double eVel=0;
+	
+	double vector_x=0;
+	double vector_y=0;
+	
+	double vector_x2=0;
+	double vector_y2=0;
+	
+	double vector_x3=0;
+	double vector_y3=0;
+	
+	double angle1=0;
+	double angle2=0;
+	double angle3=0;
+	
+	if(Math.sqrt(Math.pow(p1[0]-b.pos[0],2) + Math.pow(p1[1]-b.pos[1],2)) < ball_diameter/2) {
+		ex=p1[0]-b.pos[0];
+		ey=p1[1]-b.pos[1];
 
 		et=Math.sqrt(Math.pow(ex,2) + Math.pow(ey,2));
 
 		ex/=et;
 		ey/=et;
 
-		eVel=p.vel[0]*ex+p.vel[1]*ey;
+		eVel=b.vel[0]*ex+b.vel[1]*ey;
 
-		vector_x=s.p1[0]-s.p4[0];
-		vector_y=s.p1[1]-s.p4[1];
+		vector_x=p1[0]-p4[0];
+		vector_y=p1[1]-p4[1];
 
 		vector_x2=-vector_y;
 		vector_y2=vector_x;
 
 		angle1=Math.acos((ex*eVel*vector_x2+ey*eVel*vector_y2)/(Math.sqrt(Math.pow(ex*eVel,2) + Math.pow(ey*eVel,2))*Math.sqrt(Math.pow(vector_x2,2) + Math.pow(vector_y2,2))));
 
-		vector_x=s.p1[0]-s.p2[0];
-		vector_y=s.p1[1]-s.p2[1];
+		vector_x=p1[0]-p2[0];
+		vector_y=p1[1]-p2[1];
 
 		vector_x3=vector_y;
 		vector_y3=-vector_x;
@@ -403,254 +473,13 @@ public void check_table_collision(Ball p, TableSide s) {
 
 		if(Math.abs(angle3-angle1-angle2)< 0.2) {
 			eVel*=ball_side_coefficientOfRestitution;
-			p.vel[0]+=-2*eVel*ex;
-			p.vel[1]+=-2*eVel*ey;
-			return;
+			b.vel[0]+=-2*eVel*ex;
+			b.vel[1]+=-2*eVel*ey;
+			return true;
 		}
 	}
-
-	if(Math.sqrt(Math.pow(s.p2[0]-p.pos[0],2) + Math.pow(s.p2[1]-p.pos[1],2)) < ball_diameter/2) {
-		ex=s.p2[0]-p.pos[0];
-		ey=s.p2[1]-p.pos[1];
-
-		et=Math.sqrt(Math.pow(ex,2) + Math.pow(ey,2));
-
-		ex/=et;
-		ey/=et;
-
-		eVel=p.vel[0]*ex+p.vel[1]*ey;
-
-		vector_x=s.p2[0]-s.p1[0];
-		vector_y=s.p2[1]-s.p1[1];
-
-		vector_x2=-vector_y;
-		vector_y2=vector_x;
-
-		angle1=Math.acos((ex*eVel*vector_x2+ey*eVel*vector_y2)/(Math.sqrt(Math.pow(ex*eVel,2) + Math.pow(ey*eVel,2))*Math.sqrt(Math.pow(vector_x2,2) + Math.pow(vector_y2,2))));
-
-		vector_x=s.p2[0]-s.p3[0];
-		vector_y=s.p2[1]-s.p3[1];
-
-		vector_x3=vector_y;
-		vector_y3=-vector_x;
-
-		angle2=Math.acos((ex*eVel*vector_x3+ey*eVel*vector_y3)/(Math.sqrt(Math.pow(ex*eVel,2) + Math.pow(ey*eVel,2))*Math.sqrt(Math.pow(vector_x3,2) + Math.pow(vector_y3,2))));
-
-		angle3=Math.acos((vector_x2*vector_x3+vector_y2*vector_y3)/(Math.sqrt(Math.pow(vector_x2,2) + Math.pow(vector_y2,2))*Math.sqrt(Math.pow(vector_x3,2) + Math.pow(vector_y3,2))));
-
-		if(Math.abs(angle3-angle1-angle2)< 0.2) {
-			eVel*=ball_side_coefficientOfRestitution;
-			p.vel[0]+=-2*eVel*ex;
-			p.vel[1]+=-2*eVel*ey;
-			return;
-		}
-	}
-
-	if(Math.sqrt(Math.pow(s.p3[0]-p.pos[0],2) + Math.pow(s.p3[1]-p.pos[1],2)) < ball_diameter/2) {
-
-		ex=s.p3[0]-p.pos[0];
-		ey=s.p3[1]-p.pos[1];
-
-		et=Math.sqrt(Math.pow(ex,2) + Math.pow(ey,2));
-
-		ex/=et;
-		ey/=et;
-
-		eVel=p.vel[0]*ex+p.vel[1]*ey;
-
-		vector_x=s.p3[0]-s.p2[0];
-		vector_y=s.p3[1]-s.p2[1];
-
-		vector_x2=-vector_y;
-		vector_y2=vector_x;
-
-		angle1=Math.acos((ex*eVel*vector_x2+ey*eVel*vector_y2)/(Math.sqrt(Math.pow(ex*eVel,2) + Math.pow(ey*eVel,2))*Math.sqrt(Math.pow(vector_x2,2) + Math.pow(vector_y2,2))));
-
-		vector_x=s.p3[0]-s.p4[0];
-		vector_y=s.p3[1]-s.p4[1];
-
-		vector_x3=vector_y;
-		vector_y3=-vector_x;
-
-		angle2=Math.acos((ex*eVel*vector_x3+ey*eVel*vector_y3)/(Math.sqrt(Math.pow(ex*eVel,2) + Math.pow(ey*eVel,2))*Math.sqrt(Math.pow(vector_x3,2) + Math.pow(vector_y3,2))));
-
-		angle3=Math.acos((vector_x2*vector_x3+vector_y2*vector_y3)/(Math.sqrt(Math.pow(vector_x2,2) + Math.pow(vector_y2,2))*Math.sqrt(Math.pow(vector_x3,2) + Math.pow(vector_y3,2))));
-
-		if(Math.abs(angle3-angle1-angle2)< 0.2) {
-			eVel*=ball_side_coefficientOfRestitution;
-			p.vel[0]+=-2*eVel*ex;
-			p.vel[1]+=-2*eVel*ey;
-			return;
-		}
-	}
-
-	if(Math.sqrt(Math.pow(s.p4[0]-p.pos[0],2) + Math.pow(s.p4[1]-p.pos[1],2)) < ball_diameter/2) {
-		ex=s.p4[0]-p.pos[0];
-		ey=s.p4[1]-p.pos[1];
-
-		et=Math.sqrt(Math.pow(ex,2) + Math.pow(ey,2));
-
-		ex/=et;
-		ey/=et;
-
-		eVel=p.vel[0]*ex+p.vel[1]*ey;
-
-		vector_x=s.p4[0]-s.p3[0];
-		vector_y=s.p4[1]-s.p3[1];
-
-		vector_x2=-vector_y;
-		vector_y2=vector_x;
-
-		angle1=Math.acos((ex*eVel*vector_x2+ey*eVel*vector_y2)/(Math.sqrt(Math.pow(ex*eVel,2) + Math.pow(ey*eVel,2))*Math.sqrt(Math.pow(vector_x2,2) + Math.pow(vector_y2,2))));
-
-		vector_x=s.p4[0]-s.p1[0];
-		vector_y=s.p4[1]-s.p1[1];
-
-		vector_x3=vector_y;
-		vector_y3=-vector_x;
-
-		angle2=Math.acos((ex*eVel*vector_x3+ey*eVel*vector_y3)/(Math.sqrt(Math.pow(ex*eVel,2) + Math.pow(ey*eVel,2))*Math.sqrt(Math.pow(vector_x3,2) + Math.pow(vector_y3,2))));
-
-		angle3=Math.acos((vector_x2*vector_x3+vector_y2*vector_y3)/(Math.sqrt(Math.pow(vector_x2,2) + Math.pow(vector_y2,2))*Math.sqrt(Math.pow(vector_x3,2) + Math.pow(vector_y3,2))));
-
-		if(Math.abs(angle3-angle1-angle2)< 0.2) {
-			eVel*=ball_side_coefficientOfRestitution;
-			p.vel[0]+=-2*eVel*ex;
-			p.vel[1]+=-2*eVel*ey;
-			return;
-		}
-	}
-
-	//4-1
-
-	vector_x=s.p1[0]-s.p4[0];
-	vector_y=s.p1[1]-s.p4[1];
-
-	vector_x2=vector_y;
-	vector_y2=-vector_x;
-
-	vector_t=Math.sqrt(Math.pow(vector_x2,2) + Math.pow(vector_y2,2));
-
-	vector_x2/=vector_t;
-	vector_y2/=vector_t;
-
-	eVel=p.vel[0]*vector_x2+p.vel[1]*vector_y2;
-
-	if(eVel < 0) {
-		k=(vector_y2*(p.pos[0]-s.p4[0])+vector_x2*(s.p4[1]-p.pos[1]))/(vector_y2*(s.p1[0]-s.p4[0])-vector_x2*(s.p1[1]-s.p4[1]));
-
-		x=s.p4[0]+k*(s.p1[0]-s.p4[0]);
-		y=s.p4[1]+k*(s.p1[1]-s.p4[1]);
-
-		if(Math.sqrt(Math.pow(p.pos[0]-x,2) + Math.pow(p.pos[1]-y,2)) < ball_diameter/2) {
-			distance=Math.sqrt(Math.pow(s.p1[0]-s.p4[0],2) + Math.pow(s.p1[1]-s.p4[1],2));
-			if(Math.sqrt(Math.pow(s.p1[0]-x,2) + Math.pow(s.p1[1]-y,2)) <= distance && Math.sqrt(Math.pow(s.p4[0]-x,2) + Math.pow(s.p4[1]-y,2)) <= distance) {
-				eVel*=ball_side_coefficientOfRestitution;
-				p.vel[0]+=-2*eVel*vector_x2;
-				p.vel[1]+=-2*eVel*vector_y2;
-				return;
-			}
-		}
-	}
-
-	//1-2
-
-	vector_x=s.p2[0]-s.p1[0];
-	vector_y=s.p2[1]-s.p1[1];
-
-	vector_x2=vector_y;
-	vector_y2=-vector_x;
-
-	vector_t=Math.sqrt(Math.pow(vector_x2,2) + Math.pow(vector_y2,2));
-
-	vector_x2/=vector_t;
-	vector_y2/=vector_t;
-
-	eVel=p.vel[0]*vector_x2+p.vel[1]*vector_y2;
-
-	if(eVel < 0) {
-		k=(vector_y2*(p.pos[0]-s.p1[0])+vector_x2*(s.p1[1]-p.pos[1]))/(vector_y2*(s.p2[0]-s.p1[0])-vector_x2*(s.p2[1]-s.p1[1]));
-
-		x=s.p1[0]+k*(s.p2[0]-s.p1[0]);
-		y=s.p1[1]+k*(s.p2[1]-s.p1[1]);
-
-		if(Math.sqrt(Math.pow(p.pos[0]-x,2) + Math.pow(p.pos[1]-y,2)) < ball_diameter/2) {
-			distance=Math.sqrt(Math.pow(s.p2[0]-s.p1[0],2) + Math.pow(s.p2[1]-s.p1[1],2));
-			if(Math.sqrt(Math.pow(s.p2[0]-x,2) + Math.pow(s.p2[1]-y,2)) <= distance && Math.sqrt(Math.pow(s.p1[0]-x,2) + Math.pow(s.p1[1]-y,2)) <= distance) {
-				eVel*=ball_side_coefficientOfRestitution;
-				p.vel[0]+=-2*eVel*vector_x2;
-				p.vel[1]+=-2*eVel*vector_y2;
-				return;
-			}
-		}
-	}
-
-
-	//2-3
-
-	vector_x=s.p3[0]-s.p2[0];
-	vector_y=s.p3[1]-s.p2[1];
-
-	vector_x2=vector_y;
-	vector_y2=-vector_x;
-
-	vector_t=Math.sqrt(Math.pow(vector_x2,2) + Math.pow(vector_y2,2));
-
-	vector_x2/=vector_t;
-	vector_y2/=vector_t;
-
-	eVel=p.vel[0]*vector_x2+p.vel[1]*vector_y2;
-
-	if(eVel < 0) {
-		k=(vector_y2*(p.pos[0]-s.p2[0])+vector_x2*(s.p2[1]-p.pos[1]))/(vector_y2*(s.p3[0]-s.p2[0])-vector_x2*(s.p3[1]-s.p2[1]));
-
-		x=s.p2[0]+k*(s.p3[0]-s.p2[0]);
-		y=s.p2[1]+k*(s.p3[1]-s.p2[1]);
-
-		if(Math.sqrt(Math.pow(p.pos[0]-x,2) + Math.pow(p.pos[1]-y,2)) < ball_diameter/2) {
-			distance=Math.sqrt(Math.pow(s.p3[0]-s.p2[0],2) + Math.pow(s.p3[1]-s.p2[1],2));
-			if(Math.sqrt(Math.pow(s.p3[0]-x,2) + Math.pow(s.p3[1]-y,2)) <= distance && Math.sqrt(Math.pow(s.p2[0]-x,2) + Math.pow(s.p2[1]-y,2)) <= distance) {
-				eVel*=ball_side_coefficientOfRestitution;
-				p.vel[0]+=-2*eVel*vector_x2;
-				p.vel[1]+=-2*eVel*vector_y2;
-				return;
-			}
-		}
-	}
-
-
-	//3-4
-
-	vector_x=s.p4[0]-s.p3[0];
-	vector_y=s.p4[1]-s.p3[1];
-
-	vector_x2=vector_y;
-	vector_y2=-vector_x;
-
-	vector_t=Math.sqrt(Math.pow(vector_x2,2) + Math.pow(vector_y2,2));
-
-	vector_x2/=vector_t;
-	vector_y2/=vector_t;
-
-	eVel=p.vel[0]*vector_x2+p.vel[1]*vector_y2;
-
-	if(eVel < 0) {
-		k=(vector_y2*(p.pos[0]-s.p3[0])+vector_x2*(s.p3[1]-p.pos[1]))/(vector_y2*(s.p4[0]-s.p3[0])-vector_x2*(s.p4[1]-s.p3[1]));
-
-		x=s.p3[0]+k*(s.p4[0]-s.p3[0]);
-		y=s.p3[1]+k*(s.p4[1]-s.p3[1]);
-
-		if(Math.sqrt(Math.pow(p.pos[0]-x,2) + Math.pow(p.pos[1]-y,2)) < ball_diameter/2) {
-			distance=Math.sqrt(Math.pow(s.p4[0]-s.p3[0],2) + Math.pow(s.p4[1]-s.p3[1],2));
-			if(Math.sqrt(Math.pow(s.p4[0]-x,2) + Math.pow(s.p4[1]-y,2)) <= distance && Math.sqrt(Math.pow(s.p3[0]-x,2) + Math.pow(s.p3[1]-y,2)) <= distance) {
-				eVel*=ball_side_coefficientOfRestitution;
-				p.vel[0]+=-2*eVel*vector_x2;
-				p.vel[1]+=-2*eVel*vector_y2;
-				return;
-			}
-		}
-	}
-
+	
+	return false;
 }
 
 

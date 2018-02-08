@@ -79,7 +79,7 @@ public class LoopThread extends Thread{
 	                frameCounter=0;
 	                totalTime=0;
 	                ///uncomment to print the average fps
-	                // System.out.println("FPS: "+averageFps);
+	                 System.out.println("FPS: "+averageFps);
 	            }
 
 	        }
