@@ -308,7 +308,6 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 	}
 
 
-
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		// TODO Auto-generated method stub
