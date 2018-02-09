@@ -9,11 +9,12 @@ import java.net.UnknownHostException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import io.Client;
+
 public class GraphicInterface{
 
 	public JFrame frame;
 	public JPanel panel;
-	public int player;
 
 	/**
 	 * Launch the application.
@@ -21,32 +22,14 @@ public class GraphicInterface{
 	 * @throws UnknownHostException 
 	 */
 	public static void main(String[] args) throws UnknownHostException, IOException {
-		Socket ts=new Socket("94.60.13.255", 25565);
-
-		ts.getOutputStream().write("connect".getBytes());
-
-		byte[] b=new byte[1024];
-		ts.getInputStream().read(b);
-
-		System.out.println(new String(b));
-
-		if(!new String(b).substring(0, 8).equals("accepted")) {
-			ts.close();
-			return;
-		}
+		Client c= new Client("94.60.13.255",25565);
 		
-		ts.getInputStream().read(b);
+		c.startGame();
 		
-		int player=Integer.parseInt(new String(b).substring(0, 1));
-
-		System.out.println("Connection Successful");
-
-		ts.close();
-
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GraphicInterface window = new GraphicInterface(player);
+					GraphicInterface window = new GraphicInterface();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,13 +39,8 @@ public class GraphicInterface{
 	}
 
 	
-	/**
-	 * Create the application.
-	 * @param player 
-	 */
-	public GraphicInterface(int player) {
-		this.player=player;
-		System.out.println("You are Player: "+player);
+
+	public GraphicInterface() {
 		initialize();
 	}
 	
