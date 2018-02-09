@@ -21,7 +21,7 @@ public class GraphicInterface{
 	 * Launch the application.
 	 * @throws IOException 
 	 */
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 		Server s=new Server(25565);
 		s.startServer();
 		
@@ -35,7 +35,7 @@ public class GraphicInterface{
 				}
 			}
 		});
-	}
+	}*/
 
 	
 	public GraphicInterface() {

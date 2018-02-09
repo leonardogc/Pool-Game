@@ -5,6 +5,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
+	public static void main(String[] args) throws IOException {
+		Server s=new Server(25565);
+		s.startServer();
+	}
+	
 	private Socket player1;
 	private Socket player2;
 	private int port;
@@ -24,12 +29,17 @@ public class Server {
 		ServerSocket ts = new ServerSocket(port);
 		
 		player1 = ts.accept();
+		player1.setTcpNoDelay(true);
 		System.out.println("Player 1 Connected");
 		
 		
 		player2 = ts.accept();
+		player2.setTcpNoDelay(true);
 		System.out.println("Player 2 Connected");
 		
 		ts.close();
+		
+		player1.getOutputStream().write("hi".getBytes());
+		player2.getOutputStream().write("hi".getBytes());
 	}
 }
