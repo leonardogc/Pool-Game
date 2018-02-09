@@ -21,7 +21,7 @@ public class GraphicInterface{
 	 * @throws IOException 
 	 * @throws UnknownHostException 
 	 */
-	public static void main(String[] args) throws UnknownHostException, IOException {
+	/*public static void main(String[] args) throws UnknownHostException, IOException {
 		Client c= new Client("94.60.13.255",25565);
 		
 		c.startGame();
@@ -36,7 +36,7 @@ public class GraphicInterface{
 				}
 			}
 		});
-	}
+	}*/
 
 	
 
