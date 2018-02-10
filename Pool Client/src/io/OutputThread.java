@@ -1,10 +1,16 @@
 package io;
 
+import java.io.IOException;
+
+import io.Client.gameState;
+
 public class OutputThread extends Thread {
 	private boolean running;
+	private Client c;
 
-	public OutputThread() {
+	public OutputThread(Client c) {
 		running=false;
+		this.c=c;
 	}
 
 	public void setRunning(boolean running) {
@@ -14,12 +20,17 @@ public class OutputThread extends Thread {
 	@Override
 	public void run() {
 		while(running) {
-			System.out.println("Output");
-			try {
-				this.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(c.turn==1 && (c.state == gameState.ChoosingDir ||
+							 c.state == gameState.ChoosingVel ||
+							 c.state == gameState.MovingQueueBall ||
+							 c.state == gameState.MovingQueueBallInit)){
+				
+				try {
+					c.server.getOutputStream().write(c.output_buffer);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
