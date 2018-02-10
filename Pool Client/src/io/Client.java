@@ -21,6 +21,7 @@ public class Client {
 	
 	public gameState state;
 	public int turn;  //0 no, 1 yes, -1 unknown
+	public int ball_diameter;
 	
 	public enum gameState{
 		WaitingForServer, BallsMoving, ChoosingDir, ChoosingVel, MovingQueueBall, MovingQueueBallInit, GameEnded
@@ -46,7 +47,7 @@ public class Client {
 		ot.setRunning(true);
 		
 		it.start();
-		ot.start();
+		//ot.start();
 	}
 
 	private void connectToServer() throws UnknownHostException, IOException {
