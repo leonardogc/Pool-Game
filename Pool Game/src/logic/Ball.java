@@ -6,7 +6,6 @@ public class Ball {
 	public double pos[];
 	public double vel[];
 	public double acc[];
-	public boolean selected;
 	public double diameter;
 	public double scale=3.2;
 	public Color color;
@@ -27,7 +26,6 @@ public class Ball {
 		this.acc[0]=0;
 		this.acc[1]=0;
 		
-		this.selected=false;
 		this.diameter=diameter;
 		
 		this.number=number;
