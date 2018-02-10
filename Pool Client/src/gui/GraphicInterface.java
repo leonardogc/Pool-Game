@@ -16,46 +16,21 @@ public class GraphicInterface{
 	public JFrame frame;
 	public JPanel panel;
 
-	/**
-	 * Launch the application.
-	 * @throws IOException 
-	 * @throws UnknownHostException 
-	 */
-	/*public static void main(String[] args) throws UnknownHostException, IOException {
-		Client c= new Client("94.60.13.255",25565);
-		
-		c.startGame();
-		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GraphicInterface window = new GraphicInterface();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
 	
-
-	public GraphicInterface() {
-		initialize();
+	public GraphicInterface(Client c) {
+		initialize(c);
 	}
-	
-	
 	
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(Client c) {
 		frame = new JFrame();
 		frame.setBounds(0, 0, 1366, 735);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		panel = new GraphicsAndListeners(this);
+		panel = new GraphicsAndListeners(this,c);
 		panel.setBounds(0, 0, 1400, 800);
 		frame.getContentPane().add(panel);
 	}

@@ -10,7 +10,7 @@ public class LoopThread extends Thread{
 
 	public LoopThread(GraphicsAndListeners g){
 		   running=false;
-	       max_fps=400;
+	       max_fps=120;
 	       this.g=g;
 	}
 	
@@ -31,26 +31,12 @@ public class LoopThread extends Thread{
 	        int frameCounter=0;
 	        double averageFps;
 
-	        int counter=1;
 
 	        while(running){
 	        	startTime= System.nanoTime();
 	        	
 	        	g.repaint();
-
-	        	if(g.take_pictures) {
-	        		if(counter % (int)(max_fps/120) == 0){
-
-	        			g.takePicture();
-
-	        			/*if(g.pictureNumber == 1801) {
-	            				running=false;
-	            			}*/
-	        			counter-=(int)(max_fps/120);
-	        		}
-	        		counter++;
-	        	}
-
+	        	
 
 	        	frameDuration=System.nanoTime()-startTime;
 	        	waitTime=targetTime-frameDuration;

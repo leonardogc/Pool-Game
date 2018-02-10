@@ -41,26 +41,21 @@ public class InputThread extends Thread {
 			}
 		}
 		
-		//input_buffer="1;0;20;1,0,-2:0,2,2:;30,31;".getBytes();
+	//	input_buffer="1;0;1,0,-2:0,2,2:;30,31;12,13;".getBytes();
 		//parseData();
 	}
 	//BallsMoving, ChoosingDir, ChoosingVel, MovingQueueBall, MovingQueueBallInit, GameEnded
 	
-	//turn(0-1);state(0-1-2-3-4-5);ball_size;ballnumber,x,y:ballnumber,x,y:;x,y;
+	//turn(0-1);state(0-1-2-3-4-5);ballnumber,x,y:ballnumber,x,y:;x,y;velx,vely;
 	private void parseData() {
 		String[] data = new String(input_buffer).split(";"); 
 		if(data[0].length() > 0) {
 			c.turn=Integer.parseInt(data[0]);
-			//System.out.println(""+c.turn);
+		//	System.out.println(""+c.turn);
 		}
 		
 		if(data[2].length() > 0) {
-			c.ball_diameter=Integer.parseInt(data[2]);
-			//System.out.println(""+c.ball_diameter);
-		}
-		
-		if(data[3].length() > 0) {
-			String[] balls = data[3].split(":");
+			String[] balls = data[2].split(":");
 			Vector <Ball> balls_vector =new Vector<Ball>();
 			
 			for(int i=0; i < balls.length; i++) {
@@ -72,19 +67,34 @@ public class InputThread extends Thread {
 				//System.out.println("x:"+posX+" y:"+posY+" number:"+number);
 				
 				if(number==0) {
-					balls_vector.add(0,new Ball(posX,posY,c.ball_diameter,number));
+					balls_vector.add(0,new Ball(posX,posY,(int)c.table.ball_diameter,number));
 				}
 				else {
-					balls_vector.add(new Ball(posX,posY,c.ball_diameter,number));
+					balls_vector.add(new Ball(posX,posY,(int)c.table.ball_diameter,number));
 				}
 			}
+			
+			c.balls=balls_vector;
+		}
+		
+		if(data[3].length() > 0) {
+			String[] coords=data[3].split(",");
+			int x=Integer.parseInt(coords[0]);
+			int y=Integer.parseInt(coords[1]);
+			
+			c.x=x;
+			c.y=y;
+			//System.out.println("x:"+x+" y:"+y);
 		}
 		
 		if(data[4].length() > 0) {
 			String[] coords=data[4].split(",");
-			int x=Integer.parseInt(coords[0]);
-			int y=Integer.parseInt(coords[1]);
-			//System.out.println("x:"+x+" y:"+y);
+			int velX=Integer.parseInt(coords[0]);
+			int velY=Integer.parseInt(coords[1]);
+			
+			c.vel_vector_x=velX;
+			c.vel_vector_y=velY;
+			//System.out.println("VelX:"+velX+" VelY:"+velY);
 		}
 		
 		if(data[1].length() > 0) {
