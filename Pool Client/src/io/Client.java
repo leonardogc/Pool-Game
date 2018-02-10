@@ -43,6 +43,7 @@ public class Client {
 	public int y=0;
 	public double vel_vector_x=0;
 	public double vel_vector_y=0;
+	public double line_size;
 	
 	public enum gameState{
 		WaitingForServer, BallsMoving, ChoosingDir, ChoosingVel, MovingQueueBall, MovingQueueBallInit, GameEnded
@@ -63,7 +64,7 @@ public class Client {
 		
 		it.setRunning(true);
 		
-		create_objects();
+		initialize();
 		
 		it.start();
 	}
@@ -73,14 +74,14 @@ public class Client {
 		server.setTcpNoDelay(true);
 	}
 	
-	private void create_objects() throws IOException {
+	private void initialize() throws IOException {
 		byte[] buffer=new byte[1024]; 
 		String[] s;
 		
 		double ball_diameter;
 		int screen_size_x;
 		int screen_size_y;
-		
+
 		
 		server.getInputStream().read(buffer);
 		
@@ -92,13 +93,19 @@ public class Client {
 		
 		s=new String(buffer).split(";");
 		screen_size_x=Integer.parseInt(s[0]);
-		
-	
+
+
 		server.getInputStream().read(buffer);
-		
+
 		s=new String(buffer).split(";");
 		screen_size_y=Integer.parseInt(s[0]);
+
 		
+		server.getInputStream().read(buffer);
+
+		s=new String(buffer).split(";");
+		this.line_size=Double.parseDouble(s[0]);
+
 		table = new Table(ball_diameter,new int[] {screen_size_x,screen_size_y});
 	}
 }

@@ -26,10 +26,7 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 	
 	public Client c;
 	public GraphicInterface graphics;
-	private LoopThread thread;
-	private double line_size=300;
-	
-	
+	private LoopThread thread;	
 	
 	public GraphicsAndListeners(GraphicInterface graphics,Client c){
 		addKeyListener(this);
@@ -105,14 +102,14 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 			}
 			else if(c.state == gameState.ChoosingVel) {
 				g.setColor(Color.RED);
-				g.drawLine((int)c.balls.get(0).pos[0],(int)c.balls.get(0).pos[1], (int)(c.balls.get(0).pos[0]+c.vel_vector_x*line_size), (int)(c.balls.get(0).pos[1]+c.vel_vector_y*line_size));
+				g.drawLine((int)c.balls.get(0).pos[0],(int)c.balls.get(0).pos[1], (int)(c.balls.get(0).pos[0]+c.vel_vector_x*c.line_size), (int)(c.balls.get(0).pos[1]+c.vel_vector_y*c.line_size));
 				g.setColor(Color.GREEN);
 				double size= c.vel_vector_x*(c.x-c.balls.get(0).pos[0])+c.vel_vector_y*(c.y-c.balls.get(0).pos[1]);
 
-				if(size > line_size) {
-					g.drawLine((int)c.balls.get(0).pos[0],(int)c.balls.get(0).pos[1], (int)(c.balls.get(0).pos[0]+c.vel_vector_x*line_size), (int)(c.balls.get(0).pos[1]+c.vel_vector_y*line_size));
+				if(size > c.line_size) {
+					g.drawLine((int)c.balls.get(0).pos[0],(int)c.balls.get(0).pos[1], (int)(c.balls.get(0).pos[0]+c.vel_vector_x*c.line_size), (int)(c.balls.get(0).pos[1]+c.vel_vector_y*c.line_size));
 				}
-				else if(size <= line_size && size > 0) {
+				else if(size <= c.line_size && size > 0) {
 					g.drawLine((int)c.balls.get(0).pos[0],(int)c.balls.get(0).pos[1], (int)(c.balls.get(0).pos[0]+c.vel_vector_x*size), (int)(c.balls.get(0).pos[1]+c.vel_vector_y*size));
 				}
 			}else if(c.state == gameState.MovingQueueBall) {
