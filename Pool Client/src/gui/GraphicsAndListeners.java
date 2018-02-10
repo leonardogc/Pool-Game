@@ -184,12 +184,12 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 		graphics.panel.requestFocusInWindow();
 		if(c.turn==1) {
 			if(c.state == gameState.ChoosingDir) {
-				try {
-					c.server.getOutputStream().write((c.x+","+c.y+",1;").getBytes());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					try {
+						c.server.getOutputStream().write((c.x+","+c.y+",1;").getBytes());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
 			else if(c.state == gameState.ChoosingVel) {
 				try {

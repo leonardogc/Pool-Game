@@ -30,6 +30,7 @@ public class InputThread extends Thread {
 								   c.state == gameState.ChoosingVel ||
 								   c.state == gameState.MovingQueueBall ||
 								   c.state == gameState.MovingQueueBallInit))) {
+				
 				try {
 					c.server.getInputStream().read(input_buffer);
 				} catch (IOException e) {

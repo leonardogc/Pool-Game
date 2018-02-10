@@ -73,7 +73,7 @@ public class Client {
 		server.setTcpNoDelay(true);
 	}
 	
-	private void create_objects() {
+	private void create_objects() throws IOException {
 		byte[] buffer=new byte[1024]; 
 		String[] s;
 		
@@ -81,32 +81,20 @@ public class Client {
 		int screen_size_x;
 		int screen_size_y;
 		
-		try {
-			server.getInputStream().read(buffer);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		server.getInputStream().read(buffer);
 		
 		s=new String(buffer).split(";");
 		ball_diameter=Double.parseDouble(s[0]);
 		
-		try {
-			server.getInputStream().read(buffer);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		server.getInputStream().read(buffer);
 		
 		s=new String(buffer).split(";");
 		screen_size_x=Integer.parseInt(s[0]);
 		
-		try {
-			server.getInputStream().read(buffer);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
+		server.getInputStream().read(buffer);
 		
 		s=new String(buffer).split(";");
 		screen_size_y=Integer.parseInt(s[0]);
