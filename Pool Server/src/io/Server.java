@@ -3,6 +3,7 @@ package io;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 import logic.Ball;
 import logic.Game;
@@ -10,11 +11,12 @@ import logic.Game.gameState;
 import logic.LoopThread;
 
 public class Server {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		Server s=new Server(25565);
 		s.startServer();
 	}
 	
+	private ServerSocket ts;
 	public Socket player1;
 	public Socket player2;
 	private int port;
@@ -24,7 +26,7 @@ public class Server {
 	private double line_size=300;
 	
 	public Game game;
-	private LoopThread loopThread;
+	public LoopThread loopThread;
 	private OutputThread outputThread;
 	
 	private InputThread inputThread_p1;
@@ -39,7 +41,7 @@ public class Server {
 		this.port=port;
 	}
 	
-	public void startServer() throws IOException {
+	public void startServer() {
 		findPlayers();
 		sendDimensions();
 		
@@ -63,24 +65,90 @@ public class Server {
 		outputThread.start();
 	}
 	
-	private void sendDimensions() throws IOException {
-		player1.getOutputStream().write((ball_diameter+";"+screen_size[0]+";"+screen_size[1]+";"+line_size+";").getBytes());
-		player2.getOutputStream().write((ball_diameter+";"+screen_size[0]+";"+screen_size[1]+";"+line_size+";").getBytes());
+	public void closeServer(){
+		loopThread.setRunning(false);
+		outputThread.setRunning(false);
+		inputThread_p1.setRunning(false);
+		inputThread_p2.setRunning(false);
+		
+		try {
+			player1.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			player2.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ts.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	private void findPlayers() throws IOException {
-		ServerSocket ts = new ServerSocket(port);
+	private void sendDimensions() {
+		try {
+			player1.getOutputStream().write((ball_diameter+";"+screen_size[0]+";"+screen_size[1]+";"+line_size+";").getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			player2.getOutputStream().write((ball_diameter+";"+screen_size[0]+";"+screen_size[1]+";"+line_size+";").getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void findPlayers() {
+		try {
+			ts = new ServerSocket(port);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		player1 = ts.accept();
-		player1.setTcpNoDelay(true);
+		try {
+			player1 = ts.accept();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			player1.setTcpNoDelay(true);
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("Player 1 Connected");
 		
 		
-		player2 = ts.accept();
-		player2.setTcpNoDelay(true);
+		try {
+			player2 = ts.accept();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			player2.setTcpNoDelay(true);
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("Player 2 Connected");
 		
-		ts.close();
+		try {
+			ts.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void checkChoice(){
