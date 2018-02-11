@@ -73,6 +73,7 @@ public class ClientApplication {
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(10, 99, 414, 138);
+		textArea.setEditable(false);
 		frame.getContentPane().add(textArea);
 		
 		btnJoinServer.addActionListener(new ActionListener() {
