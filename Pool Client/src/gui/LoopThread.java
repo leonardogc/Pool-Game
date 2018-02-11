@@ -13,7 +13,7 @@ public class LoopThread extends Thread{
 
 	public LoopThread(GraphicsAndListeners g){
 		   running=false;
-	       max_fps=60;
+	       max_fps=120;
 	       this.g=g;
 	}
 	
