@@ -1,7 +1,7 @@
-package gui;
+package logic;
 
-import java.awt.event.WindowEvent;
 
+import io.Server;
 import logic.Game.gameState;
 
 
@@ -9,12 +9,12 @@ public class LoopThread extends Thread{
 	
 	 private boolean running;
 	 private double max_fps;
-	 private GraphicsAndListeners g;
+	 private Server s;
 
-	public LoopThread(GraphicsAndListeners g){
+	public LoopThread(Server s){
 		   running=false;
 	       max_fps=400;
-	       this.g=g;
+	       this.s=s;
 	}
 	
 	   public void setRunning(boolean running){
@@ -34,30 +34,12 @@ public class LoopThread extends Thread{
 	        int frameCounter=0;
 	        double averageFps;
 
-	        int counter=1;
-
 	        while(running){
 	        	startTime= System.nanoTime();
 	        	
-	        	if(g.game.state==gameState.BallsMoving) {
-	        		g.game.update(1/max_fps);
+	        	if(s.game.state==gameState.BallsMoving) {
+	        		s.game.update(1/max_fps);
 	        	}
-	        	
-	        	g.repaint();
-
-	        	if(g.take_pictures) {
-	        		if(counter % (int)(max_fps/120) == 0){
-
-	        			g.takePicture();
-
-	        			/*if(g.pictureNumber == 1801) {
-	            				running=false;
-	            			}*/
-	        			counter-=(int)(max_fps/120);
-	        		}
-	        		counter++;
-	        	}
-
 
 	        	frameDuration=System.nanoTime()-startTime;
 	        	waitTime=targetTime-frameDuration;
@@ -83,9 +65,6 @@ public class LoopThread extends Thread{
 	            }
 
 	        }
-	        
-	        g.graphics.frame.dispatchEvent(new WindowEvent(g.graphics.frame, WindowEvent.WINDOW_CLOSING));
-
 	    }
 
 }

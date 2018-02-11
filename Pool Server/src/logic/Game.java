@@ -1,6 +1,5 @@
 package logic;
 
-import java.awt.Color;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
@@ -18,14 +17,14 @@ public double ball_side_coefficientOfRestitution=0.75; //0.6-0.9
 public double ball_ball_coefficientOfRestitution=0.95; //0.92-0.98
 public double ball_cloth_coefficientOfFriction=0.01;//0.005-0.015
 
-public double ball_diameter=22;
-public double m_to_p=ball_diameter/0.057;
-public double max_speed=8*m_to_p;
-public double pocket_diameter=2*ball_diameter;
-public double table_side_thickness=pocket_diameter/2;
-public double middle_hole_opening_size=1.4*pocket_diameter;
+public double ball_diameter;
+public double m_to_p;
+public double max_speed;
+public double pocket_diameter;
+public double table_side_thickness;
+public double middle_hole_opening_size;
 
-public int screen_size[]=new int[]{1366,735};
+public int[] screen_size;
 
 public boolean balls_stopped;
 public gameState state;
@@ -55,7 +54,16 @@ public enum group_of_balls{
 }
 
 
-public Game(){
+public Game(double ball_diameter, int[] screen_size){
+	this.screen_size=screen_size;
+	this.ball_diameter=ball_diameter;
+	
+	this.m_to_p=ball_diameter/0.057;
+	this.max_speed=8*m_to_p;
+	this.pocket_diameter=2*ball_diameter;
+	this.table_side_thickness=pocket_diameter/2;
+	this.middle_hole_opening_size=1.4*pocket_diameter;
+	
 	rand=new Random();
 	balls=new Vector<Ball>();
 	pockets=new Vector<Pocket>();
