@@ -13,7 +13,7 @@ public class LoopThread extends Thread{
 
 	public LoopThread(GraphicsAndListeners g){
 		   running=false;
-	       max_fps=120;
+	       max_fps=60;
 	       this.g=g;
 	}
 	
@@ -34,30 +34,29 @@ public class LoopThread extends Thread{
 	        int frameCounter=0;
 	        double averageFps;
 
-	        int counter =0;
-
 	        while(running){
 	        	startTime= System.nanoTime();
 
 	        	g.repaint();
 
-	        	if(counter == 0) {
-	        		if(g.c.turn==1 && (g.c.state==gameState.ChoosingDir || 
-	        				g.c.state==gameState.ChoosingVel ||
-	        				g.c.state==gameState.MovingQueueBall ||
-	        				g.c.state==gameState.MovingQueueBallInit)) {
+	        	if(g.c.turn==1 && (g.c.state==gameState.ChoosingDir || 
+	        			g.c.state==gameState.ChoosingVel ||
+	        			g.c.state==gameState.MovingQueueBall ||
+	        			g.c.state==gameState.MovingQueueBallInit)) {
 
+	        		try {
+	        			g.c.server.getOutputStream().write((g.c.x+","+g.c.y+",0;").getBytes());
+	        		} catch (IOException e1) {
+	        			// TODO Auto-generated catch block
+	        			e1.printStackTrace();
 	        			try {
-	        				g.c.server.getOutputStream().write((g.c.x+","+g.c.y+",0;").getBytes());
-	        			} catch (IOException e1) {
-	        				// TODO Auto-generated catch block
-	        				e1.printStackTrace();
-	        			}
+							g.c.server.close();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	        			running=false;
 	        		}
-	        		counter=0;
-	        	}
-	        	else {
-	        		counter++;
 	        	}
 
 
@@ -81,7 +80,7 @@ public class LoopThread extends Thread{
 	                frameCounter=0;
 	                totalTime=0;
 	                ///uncomment to print the average fps
-	                 System.out.println("FPS: "+averageFps);
+	                // System.out.println("FPS: "+averageFps);
 	            }
 
 	        }
