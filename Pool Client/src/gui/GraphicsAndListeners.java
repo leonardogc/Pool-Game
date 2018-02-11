@@ -38,7 +38,6 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 		
     	
     	thread=new LoopThread(this);
-		thread.setRunning(true);
 		thread.start();
 	}
 	

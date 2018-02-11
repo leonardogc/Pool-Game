@@ -7,37 +7,24 @@ import io.Client.gameState;
 import logic.Ball;
 
 public class InputThread extends Thread {
-	private boolean running;
 	private Client c;
 	public byte[] input_buffer;
 	private int inputBufferSize = 65536;
 	
 	public InputThread(Client c) {
-		running=false;
 		this.c=c;
 		input_buffer=new byte[inputBufferSize];
 	}
 	
-	public void setRunning(boolean running) {
-		this.running=running;
-	}
-	
 	@Override
 	public void run() {
-		while(running) {
+		while(!c.stop) {
 				try {
 					c.server.getInputStream().read(input_buffer);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					
-					try {
-						c.server.close();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
+					c.closeGame();
         			return;
 				}
 				

@@ -45,6 +45,8 @@ public class Client {
 	public double vel_vector_y=0;
 	public double line_size;
 	
+	public boolean stop=false;
+	
 	public enum gameState{
 		WaitingForServer, BallsMoving, ChoosingDir, ChoosingVel, MovingQueueBall, MovingQueueBallInit, GameEnded
 	}
@@ -57,12 +59,28 @@ public class Client {
 		state=gameState.WaitingForServer;
 	}
 	
+	public Client(String address) {
+		String[] add_port=address.split(":");
+		this.address=add_port[0];
+		this.port=Integer.parseInt(add_port[1]);
+		
+		state=gameState.WaitingForServer;
+	}
+	
+	public void closeGame() {
+		stop=true;
+		try {
+			server.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void startGame() throws UnknownHostException, IOException {
 		connectToServer();
 		
 		InputThread it= new InputThread(this);
-		
-		it.setRunning(true);
 		
 		initialize();
 		

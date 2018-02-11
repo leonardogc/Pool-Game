@@ -7,20 +7,13 @@ import io.Client.gameState;
 
 public class LoopThread extends Thread{
 	
-	 private boolean running;
 	 private double max_fps;
 	 private GraphicsAndListeners g;
 
 	public LoopThread(GraphicsAndListeners g){
-		   running=false;
 	       max_fps=120;
 	       this.g=g;
 	}
-	
-	   public void setRunning(boolean running){
-	       this.running=running;
-	   }
-
 	   
 	    @Override
 	    public void run() {
@@ -34,7 +27,7 @@ public class LoopThread extends Thread{
 	        int frameCounter=0;
 	        double averageFps;
 
-	        while(running){
+	        while(!g.c.stop){
 	        	startTime= System.nanoTime();
 
 	        	g.repaint();
@@ -49,13 +42,7 @@ public class LoopThread extends Thread{
 	        		} catch (IOException e1) {
 	        			// TODO Auto-generated catch block
 	        			e1.printStackTrace();
-	        			try {
-							g.c.server.close();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-	        			running=false;
+	        			g.c.closeGame();
 	        		}
 	        	}
 
