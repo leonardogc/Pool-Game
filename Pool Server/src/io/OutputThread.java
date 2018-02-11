@@ -13,7 +13,7 @@ public class OutputThread extends Thread{
 
 	public OutputThread(Server s){
 		   running=false;
-	       max_fps=60;
+	       max_fps=120;
 	       this.s=s;
 	}
 	
