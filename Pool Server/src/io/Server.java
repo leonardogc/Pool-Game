@@ -16,7 +16,7 @@ public class Server {
 		s.startServer();
 	}
 	
-	private ServerSocket ts;
+	private ServerSocket ts=null;
 	public Socket player1;
 	public Socket player2;
 	private int port;
@@ -64,13 +64,13 @@ public class Server {
 		inputThread_p2.start();
 		outputThread.start();
 	}
-	
+
 	public void closeServer(){
 		loopThread.setRunning(false);
 		outputThread.setRunning(false);
 		inputThread_p1.setRunning(false);
 		inputThread_p2.setRunning(false);
-		
+
 		try {
 			player1.close();
 		} catch (IOException e1) {
@@ -83,14 +83,9 @@ public class Server {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		try {
-			ts.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
-	
+
 	private void sendDimensions() {
 		try {
 			player1.getOutputStream().write((ball_diameter+";"+screen_size[0]+";"+screen_size[1]+";"+line_size+";").getBytes());
@@ -149,6 +144,7 @@ public class Server {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		ts=null;
 	}
 	
 	public void checkChoice(){

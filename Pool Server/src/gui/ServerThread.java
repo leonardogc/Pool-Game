@@ -20,5 +20,7 @@ public class ServerThread extends Thread{
 	public void run() {
 		sApp.s = new Server(port);
 		sApp.s.startServer();
+		
+		sApp.btnCloseServer.setEnabled(true);
 	}
 }

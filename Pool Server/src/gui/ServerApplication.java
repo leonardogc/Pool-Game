@@ -21,8 +21,10 @@ public class ServerApplication {
 
 	private JFrame frame;
 	private JTextField textField;
+	public JButton btnCloseServer;
 	public Server s;
 	public ServerApplication sApp;
+
 
 	/**
 	 * Launch the application.
@@ -77,7 +79,7 @@ public class ServerApplication {
 		textArea.setBounds(10, 99, 414, 138);
 		frame.getContentPane().add(textArea);
 		
-		JButton btnCloseServer = new JButton("Close Server");
+		btnCloseServer = new JButton("Close Server");
 		btnCloseServer.setBounds(248, 65, 148, 23);
 		btnCloseServer.setEnabled(false);
 		frame.getContentPane().add(btnCloseServer);
@@ -100,7 +102,6 @@ public class ServerApplication {
 			public void actionPerformed(ActionEvent e) {
 				new ServerThread(Integer.parseInt(textField.getText()), sApp);
 				btnCreateServer.setEnabled(false);
-				btnCloseServer.setEnabled(true);
 				textArea.setText("Server Created!");
 			}
 		});
