@@ -76,6 +76,7 @@ public class ServerApplication {
 		
 		textArea = new JTextArea();
 		textArea.setBounds(10, 99, 414, 138);
+		textArea.setEditable(false);
 		frame.getContentPane().add(textArea);
 		
 		btnCloseServer = new JButton("Close Server");
