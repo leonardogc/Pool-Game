@@ -21,10 +21,9 @@ public class ServerApplication {
 
 	private JFrame frame;
 	private JTextField textField;
+	public JTextArea textArea;
 	public JButton btnCloseServer;
 	public Server s;
-	public ServerApplication sApp;
-
 
 	/**
 	 * Launch the application.
@@ -53,7 +52,7 @@ public class ServerApplication {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		sApp=this;
+		ServerApplication sApp=this;
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 287);
@@ -75,7 +74,7 @@ public class ServerApplication {
 		btnCreateServer.setBounds(45, 65, 148, 23);
 		frame.getContentPane().add(btnCreateServer);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setBounds(10, 99, 414, 138);
 		frame.getContentPane().add(textArea);
 		
@@ -102,7 +101,7 @@ public class ServerApplication {
 			public void actionPerformed(ActionEvent e) {
 				new ServerThread(Integer.parseInt(textField.getText()), sApp);
 				btnCreateServer.setEnabled(false);
-				textArea.setText("Server Created!");
+				textArea.setText("Server Created!\nWaiting for players...");
 			}
 		});
 		

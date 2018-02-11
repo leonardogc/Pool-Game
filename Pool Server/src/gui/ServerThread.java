@@ -21,6 +21,7 @@ public class ServerThread extends Thread{
 		sApp.s = new Server(port);
 		sApp.s.startServer();
 		
+		sApp.textArea.setText("Players Connected Successfully!\nStarted Game");
 		sApp.btnCloseServer.setEnabled(true);
 	}
 }
