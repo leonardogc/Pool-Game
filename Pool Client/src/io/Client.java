@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Vector;
 
@@ -12,9 +13,12 @@ import logic.Ball;
 import logic.Table;
 
 public class Client {
-	public static void main(String[] args) throws UnknownHostException, IOException {
+	public static void main(String[] args) {
 		Client c= new Client("94.60.13.255",25565);
-		c.startGame();
+		if(c.startGame()==-1) {
+			System.out.println("An error occured trying to connect to the server :( try again later");
+			return;
+		}
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -77,22 +81,45 @@ public class Client {
 		}
 	}
 	
-	public void startGame() throws UnknownHostException, IOException {
-		connectToServer();
+	public int startGame() {
+		if(connectToServer() == -1) {
+			return -1;
+		}
 		
 		InputThread it= new InputThread(this);
 		
 		initialize();
 		
 		it.start();
+		
+		return 0;
 	}
 
-	private void connectToServer() throws UnknownHostException, IOException {
-		server=new Socket(InetAddress.getByName(address),port);
-		server.setTcpNoDelay(true);
+	private int connectToServer() {
+		try {
+			server=new Socket(InetAddress.getByName(address),port);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -1;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -1;
+		}
+		
+		try {
+			server.setTcpNoDelay(true);
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -1;
+		}
+		
+		return 0;
 	}
 	
-	private void initialize() throws IOException {
+	private void initialize() {
 		byte[] buffer=new byte[1024]; 
 		String[] s;
 		
@@ -101,7 +128,12 @@ public class Client {
 		int screen_size_y;
 
 		
-		server.getInputStream().read(buffer);
+		try {
+			server.getInputStream().read(buffer);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		s=new String(buffer).split(";");
 		

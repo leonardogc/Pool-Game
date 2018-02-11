@@ -21,6 +21,8 @@ public class ClientApplication {
 
 	public JFrame frame;
 	private JTextField textField;
+	public JTextArea textArea;
+	public JButton btnJoinServer;
 
 	/**
 	 * Launch the application.
@@ -67,11 +69,11 @@ public class ClientApplication {
 		lblPort.setBounds(28, 11, 109, 20);
 		frame.getContentPane().add(lblPort);
 		
-		JButton btnJoinServer = new JButton("Join Server");
+		btnJoinServer = new JButton("Join Server");
 		btnJoinServer.setBounds(138, 65, 148, 23);
 		frame.getContentPane().add(btnJoinServer);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setBounds(10, 99, 414, 138);
 		textArea.setEditable(false);
 		frame.getContentPane().add(textArea);
