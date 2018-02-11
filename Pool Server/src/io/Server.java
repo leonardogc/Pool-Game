@@ -58,9 +58,9 @@ public class Server {
 		inputThread_p2.setRunning(true);
 		
 		loopThread.start();
-		outputThread.start();
 		inputThread_p1.start();
 		inputThread_p2.start();
+		outputThread.start();
 	}
 	
 	private void sendDimensions() throws IOException {

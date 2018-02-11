@@ -11,7 +11,7 @@ public class InputThread extends Thread {
 	private Socket player;
 	private Server s;
 	public byte[] input_buffer;
-	private int inputBufferSize = 1024;
+	private int inputBufferSize = 65536;
 	
 	public InputThread(Socket player, Server s) {
 		running=false;
@@ -32,6 +32,22 @@ public class InputThread extends Thread {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					
+					try {
+						s.player1.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					try {
+						s.player2.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					return;
 				}
 				
 				parseData();
@@ -41,6 +57,7 @@ public class InputThread extends Thread {
 	//x,y,check;
 	private void parseData() {
 		String[] data = new String(input_buffer).split(";"); 
+		//System.out.println("Message length: "+new String(input_buffer));
 		if(data[0].length() > 0) {
 			String[] data2 = data[0].split(",");
 			
