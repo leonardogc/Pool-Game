@@ -2,9 +2,6 @@ package io;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Vector;
-
-import logic.Ball;
 
 public class InputThread extends Thread {
 	private boolean running;

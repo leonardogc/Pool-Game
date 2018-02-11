@@ -1,7 +1,5 @@
 package gui;
 
-import java.io.IOException;
-
 import io.Server;
 
 public class ServerThread extends Thread{
