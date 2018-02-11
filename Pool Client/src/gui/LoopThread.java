@@ -1,6 +1,9 @@
 package gui;
 
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+
+import io.Client.gameState;
 
 public class LoopThread extends Thread{
 	
@@ -31,12 +34,32 @@ public class LoopThread extends Thread{
 	        int frameCounter=0;
 	        double averageFps;
 
+	        int counter =0;
 
 	        while(running){
 	        	startTime= System.nanoTime();
-	        	
+
 	        	g.repaint();
-	        	
+
+	        	if(counter == 0) {
+	        		if(g.c.turn==1 && (g.c.state==gameState.ChoosingDir || 
+	        				g.c.state==gameState.ChoosingVel ||
+	        				g.c.state==gameState.MovingQueueBall ||
+	        				g.c.state==gameState.MovingQueueBallInit)) {
+
+	        			try {
+	        				g.c.server.getOutputStream().write((g.c.x+","+g.c.y+",0;").getBytes());
+	        			} catch (IOException e1) {
+	        				// TODO Auto-generated catch block
+	        				e1.printStackTrace();
+	        			}
+	        		}
+	        		counter=0;
+	        	}
+	        	else {
+	        		counter++;
+	        	}
+
 
 	        	frameDuration=System.nanoTime()-startTime;
 	        	waitTime=targetTime-frameDuration;

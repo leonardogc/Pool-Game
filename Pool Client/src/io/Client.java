@@ -86,26 +86,25 @@ public class Client {
 		server.getInputStream().read(buffer);
 		
 		s=new String(buffer).split(";");
+		
+		
 		ball_diameter=Double.parseDouble(s[0]);
 		
+		System.out.println("Ball Diameter:"+ ball_diameter);
 		
-		server.getInputStream().read(buffer);
+		screen_size_x=Integer.parseInt(s[1]);
 		
-		s=new String(buffer).split(";");
-		screen_size_x=Integer.parseInt(s[0]);
+		System.out.println("size_x:"+ screen_size_x);
 
-
-		server.getInputStream().read(buffer);
-
-		s=new String(buffer).split(";");
-		screen_size_y=Integer.parseInt(s[0]);
-
+		screen_size_y=Integer.parseInt(s[2]);
 		
-		server.getInputStream().read(buffer);
+		System.out.println("size_y:"+ screen_size_y);
 
-		s=new String(buffer).split(";");
-		this.line_size=Double.parseDouble(s[0]);
+		this.line_size=Double.parseDouble(s[3]);
+		
+		System.out.println("line:"+ this.line_size+"\n\n");
 
 		table = new Table(ball_diameter,new int[] {screen_size_x,screen_size_y});
+		balls=new Vector<Ball>();
 	}
 }

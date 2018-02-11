@@ -247,12 +247,12 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 			c.x=e.getX();
 			c.y=e.getY();
         	
-        	try {
+        	/*try {
 				c.server.getOutputStream().write((c.x+","+c.y+",0;").getBytes());
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
+			}*/
 		}
         	
 	}

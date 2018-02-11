@@ -25,12 +25,6 @@ public class InputThread extends Thread {
 	@Override
 	public void run() {
 		while(running) {
-			if((c.state == gameState.BallsMoving) || (c.state == gameState.WaitingForServer)||
-					(c.turn==0 && (c.state == gameState.ChoosingDir ||
-								   c.state == gameState.ChoosingVel ||
-								   c.state == gameState.MovingQueueBall ||
-								   c.state == gameState.MovingQueueBallInit))) {
-				
 				try {
 					c.server.getInputStream().read(input_buffer);
 				} catch (IOException e) {
@@ -39,11 +33,8 @@ public class InputThread extends Thread {
 				}
 				
 				parseData();
-			}
 		}
 		
-	//	input_buffer="1;0;1,0,-2:0,2,2:;30,31;12,13;".getBytes();
-		//parseData();
 	}
 	//BallsMoving, ChoosingDir, ChoosingVel, MovingQueueBall, MovingQueueBallInit, GameEnded
 	
@@ -52,7 +43,7 @@ public class InputThread extends Thread {
 		String[] data = new String(input_buffer).split(";"); 
 		if(data[0].length() > 0) {
 			c.turn=Integer.parseInt(data[0]);
-		//	System.out.println(""+c.turn);
+			System.out.println("Turn: "+c.turn);
 		}
 		
 		if(data[2].length() > 0) {
@@ -65,7 +56,7 @@ public class InputThread extends Thread {
 				int posX=Integer.parseInt(ball[1]);
 				int posY=Integer.parseInt(ball[2]);
 				
-				//System.out.println("x:"+posX+" y:"+posY+" number:"+number);
+				System.out.println("x:"+posX+" y:"+posY+" number:"+number);
 				
 				if(number==0) {
 					balls_vector.add(0,new Ball(posX,posY,(int)c.table.ball_diameter,number));
@@ -80,22 +71,18 @@ public class InputThread extends Thread {
 		
 		if(data[3].length() > 0) {
 			String[] coords=data[3].split(",");
-			int x=Integer.parseInt(coords[0]);
-			int y=Integer.parseInt(coords[1]);
-			
-			c.x=x;
-			c.y=y;
-			//System.out.println("x:"+x+" y:"+y);
+			c.x=Integer.parseInt(coords[0]);
+			c.y=Integer.parseInt(coords[1]);
+
+			System.out.println("x:"+c.x+" y:"+c.y);
 		}
 		
 		if(data[4].length() > 0) {
 			String[] coords=data[4].split(",");
-			int velX=Integer.parseInt(coords[0]);
-			int velY=Integer.parseInt(coords[1]);
-			
-			c.vel_vector_x=velX;
-			c.vel_vector_y=velY;
-			//System.out.println("VelX:"+velX+" VelY:"+velY);
+			c.vel_vector_x=Double.parseDouble(coords[0]);
+			c.vel_vector_y=Double.parseDouble(coords[1]);
+	
+			System.out.println("VelX:"+c.vel_vector_x+" VelY:"+c.vel_vector_y);
 		}
 		
 		if(data[1].length() > 0) {
@@ -120,7 +107,7 @@ public class InputThread extends Thread {
 				break;
 			}
 			
-			//System.out.println(""+c.state);
+			System.out.println(""+c.state);
 		}
 	}
 
