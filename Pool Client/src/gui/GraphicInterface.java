@@ -1,11 +1,5 @@
 package gui;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 

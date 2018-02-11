@@ -8,19 +8,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import io.Client;
 import io.Client.gameState;
-import logic.Ball;
 
 public class GraphicsAndListeners extends JPanel implements KeyListener, MouseListener, MouseMotionListener, ActionListener{
 	

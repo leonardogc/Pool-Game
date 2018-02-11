@@ -1,8 +1,5 @@
 package logic;
 
-import java.awt.Color;
-import java.util.Collections;
-import java.util.Random;
 import java.util.Vector;
 
 
