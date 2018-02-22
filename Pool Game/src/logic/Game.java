@@ -399,25 +399,33 @@ public boolean check_line_table_collision(double[] p4,double[] p1, Ball b) {
 	vector_x2/=vector_t;
 	vector_y2/=vector_t;
 
-	eVel=b.vel[0]*vector_x2+b.vel[1]*vector_y2;
+	k=(vector_y2*(b.pos[0]-p4[0])+vector_x2*(p4[1]-b.pos[1]))/(vector_y2*(p1[0]-p4[0])-vector_x2*(p1[1]-p4[1]));
 
-	if(eVel < 0) {
-		k=(vector_y2*(b.pos[0]-p4[0])+vector_x2*(p4[1]-b.pos[1]))/(vector_y2*(p1[0]-p4[0])-vector_x2*(p1[1]-p4[1]));
+	x=p4[0]+k*(p1[0]-p4[0]);
+	y=p4[1]+k*(p1[1]-p4[1]);
 
-		x=p4[0]+k*(p1[0]-p4[0]);
-		y=p4[1]+k*(p1[1]-p4[1]);
+	if(Math.sqrt(Math.pow(b.pos[0]-x,2) + Math.pow(b.pos[1]-y,2)) < ball_diameter/2) {
+		distance=Math.sqrt(Math.pow(p1[0]-p4[0],2) + Math.pow(p1[1]-p4[1],2));
+		if(Math.sqrt(Math.pow(p1[0]-x,2) + Math.pow(p1[1]-y,2)) <= distance && Math.sqrt(Math.pow(p4[0]-x,2) + Math.pow(p4[1]-y,2)) <= distance) {
+			vector_x= x-b.pos[0];
+			vector_y= y-b.pos[1];
+			
+			vector_t=Math.sqrt(Math.pow(vector_x,2) + Math.pow(vector_y,2));
 
-		if(Math.sqrt(Math.pow(b.pos[0]-x,2) + Math.pow(b.pos[1]-y,2)) < ball_diameter/2) {
-			distance=Math.sqrt(Math.pow(p1[0]-p4[0],2) + Math.pow(p1[1]-p4[1],2));
-			if(Math.sqrt(Math.pow(p1[0]-x,2) + Math.pow(p1[1]-y,2)) <= distance && Math.sqrt(Math.pow(p4[0]-x,2) + Math.pow(p4[1]-y,2)) <= distance) {
+			vector_x/=vector_t;
+			vector_y/=vector_t;
+
+			eVel=b.vel[0]*vector_x+b.vel[1]*vector_y;
+
+			if(eVel > 0) {
 				eVel*=ball_side_coefficientOfRestitution;
-				b.vel[0]+=-2*eVel*vector_x2;
-				b.vel[1]+=-2*eVel*vector_y2;
+				b.vel[0]+=-2*eVel*vector_x;
+				b.vel[1]+=-2*eVel*vector_y;
 				return true;
 			}
 		}
 	}
-	
+
 	return false;
 }
 
