@@ -308,7 +308,7 @@ public void play_ai() {
 							
 							angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
 							
-							if(angle < Math.PI/2) {
+							if(angle < Math.PI/4) {
 								balls.get(0).vel[0]=vec2_x*max_speed*0.25;
 								balls.get(0).vel[1]=vec2_y*max_speed*0.25;
 								
@@ -383,7 +383,7 @@ public void play_ai() {
 							
 							angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
 							
-							if(angle < Math.PI/2) {
+							if(angle < Math.PI/4) {
 								balls.get(0).vel[0]=vec2_x*max_speed*0.25;
 								balls.get(0).vel[1]=vec2_y*max_speed*0.25;
 								
@@ -458,7 +458,7 @@ public void play_ai() {
 							
 							angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
 							
-							if(angle < Math.PI/2) {
+							if(angle < Math.PI/4) {
 								balls.get(0).vel[0]=vec2_x*max_speed*0.25;
 								balls.get(0).vel[1]=vec2_y*max_speed*0.25;
 								
