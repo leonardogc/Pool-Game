@@ -44,7 +44,7 @@ public int balls_left_group_2;
 public group_of_balls player1;
 public boolean player1_turn;
 
-public boolean ai=false;
+public boolean ai=true;
 
 //real ball size 5.7 cm 
 //real table size 2.84 m x 1.42 m
@@ -271,6 +271,20 @@ public void play_ai() {
 			points.add(new double[]{table_edge[0]+10, table_edge[3]-10});
 
 			if(player1 == group_of_balls.Group_1) {
+				Vector<Ball> balls_g=new Vector<Ball>();
+				
+				for(int i = 0; i< balls.size(); i++) {
+					if((balls.get(i).number>=9 && balls.get(i).number<=15 && balls_left_group_2 > 0) || (balls_left_group_2 == 0 && balls.get(i).number == 8)) {
+						balls_g.add(balls.get(i));
+						balls.remove(i);
+						i--;
+					}
+				}
+				
+				for(int i = 0; i< balls_g.size(); i++) {
+					balls.add(balls_g.get(i));
+				}
+				
 				for(int i = 1; i< balls.size(); i++) {
 					if((balls.get(i).number>=9 && balls.get(i).number<=15 && balls_left_group_2 > 0) || (balls_left_group_2 == 0 && balls.get(i).number == 8)) {
 						for(int i2 =0 ; i2< points.size(); i2++) {
@@ -346,6 +360,21 @@ public void play_ai() {
 				}
 			}
 			else if(player1 == group_of_balls.Group_2) {
+
+				Vector<Ball> balls_g=new Vector<Ball>();
+
+				for(int i = 0; i< balls.size(); i++) {
+					if((balls.get(i).number>=1 && balls.get(i).number<=7 && balls_left_group_1 > 0) || (balls_left_group_1 == 0 && balls.get(i).number == 8)) {
+						balls_g.add(balls.get(i));
+						balls.remove(i);
+						i--;
+					}
+				}
+
+				for(int i = 0; i< balls_g.size(); i++) {
+					balls.add(balls_g.get(i));
+				}
+
 				for(int i = 1; i< balls.size(); i++) {
 					if((balls.get(i).number>=1 && balls.get(i).number<=7 && balls_left_group_1 > 0) || (balls_left_group_1 == 0 && balls.get(i).number == 8)) {
 						for(int i2 =0 ; i2< points.size(); i2++) {
@@ -421,6 +450,20 @@ public void play_ai() {
 				}
 			}
 			else {
+				Vector<Ball> balls_g=new Vector<Ball>();
+
+				for(int i = 0; i< balls.size(); i++) {
+					if(balls.get(i).number!=8 && balls.get(i).number!=0) {
+						balls_g.add(balls.get(i));
+						balls.remove(i);
+						i--;
+					}
+				}
+
+				for(int i = 0; i< balls_g.size(); i++) {
+					balls.add(balls_g.get(i));
+				}
+
 				for(int i = 1; i< balls.size(); i++) {
 					if(balls.get(i).number!=8) {
 						for(int i2 =0 ; i2< points.size(); i2++) {
