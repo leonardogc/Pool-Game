@@ -213,70 +213,72 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 		// TODO Auto-generated method stub
 		graphics.panel.requestFocusInWindow();
 		
-		if(game.state == gameState.ChoosingDir) {
-			vel_vector_x=x-game.balls.get(0).pos[0];
-			vel_vector_y=y-game.balls.get(0).pos[1];
-			
-			double vector_size=Math.sqrt(Math.pow(vel_vector_x,2)+Math.pow(vel_vector_y,2));
-			
-			vel_vector_x/=vector_size;
-			vel_vector_y/=vector_size;
-			game.state = gameState.ChoosingVel;
-		}
-		else if(game.state == gameState.ChoosingVel) {
-			double size= vel_vector_x*(x-game.balls.get(0).pos[0])+vel_vector_y*(y-game.balls.get(0).pos[1]);
-			
-			if(size > line_size) {
-				game.balls.get(0).vel[0]=vel_vector_x*game.max_speed;
-				game.balls.get(0).vel[1]=vel_vector_y*game.max_speed;
-			}else if(size <= line_size && size > 0){
-				game.balls.get(0).vel[0]=vel_vector_x*(size/line_size)*game.max_speed;
-				game.balls.get(0).vel[1]=vel_vector_y*(size/line_size)*game.max_speed;
+		if((game.ai && game.player1_turn) || !game.ai) {
+			if(game.state == gameState.ChoosingDir) {
+				vel_vector_x=x-game.balls.get(0).pos[0];
+				vel_vector_y=y-game.balls.get(0).pos[1];
+
+				double vector_size=Math.sqrt(Math.pow(vel_vector_x,2)+Math.pow(vel_vector_y,2));
+
+				vel_vector_x/=vector_size;
+				vel_vector_y/=vector_size;
+				game.state = gameState.ChoosingVel;
 			}
-			
-			game.hit_ball=false;
-			game.hit_player_ball_first=false;
-			game.ball_8_in_pocket=false;
-			game.ball_0_in_pocket=false;
-			game.player_ball_in_pocket=false;
-			game.state = gameState.BallsMoving;
-		}
-		else if(game.state == gameState.MovingQueueBall) {
-			boolean valid=true;
-			
-			for(int i=0; i< game.balls.size(); i++) {
-				if(Math.sqrt(Math.pow(game.balls.get(i).pos[0]-x,2) + Math.pow(game.balls.get(i).pos[1]-y,2)) < game.ball_diameter){
+			else if(game.state == gameState.ChoosingVel) {
+				double size= vel_vector_x*(x-game.balls.get(0).pos[0])+vel_vector_y*(y-game.balls.get(0).pos[1]);
+
+				if(size > line_size) {
+					game.balls.get(0).vel[0]=vel_vector_x*game.max_speed;
+					game.balls.get(0).vel[1]=vel_vector_y*game.max_speed;
+				}else if(size <= line_size && size > 0){
+					game.balls.get(0).vel[0]=vel_vector_x*(size/line_size)*game.max_speed;
+					game.balls.get(0).vel[1]=vel_vector_y*(size/line_size)*game.max_speed;
+				}
+
+				game.hit_ball=false;
+				game.hit_player_ball_first=false;
+				game.ball_8_in_pocket=false;
+				game.ball_0_in_pocket=false;
+				game.player_ball_in_pocket=false;
+				game.state = gameState.BallsMoving;
+			}
+			else if(game.state == gameState.MovingQueueBall) {
+				boolean valid=true;
+
+				for(int i=0; i< game.balls.size(); i++) {
+					if(Math.sqrt(Math.pow(game.balls.get(i).pos[0]-x,2) + Math.pow(game.balls.get(i).pos[1]-y,2)) < game.ball_diameter){
+						valid=false;
+						break;
+					}
+				}
+
+				if( x > game.table_edge[2]-game.ball_diameter/2||
+						x < game.table_edge[0]+game.ball_diameter/2||
+						y > game.table_edge[3]-game.ball_diameter/2||
+						y < game.table_edge[1]+game.ball_diameter/2) {
 					valid=false;
-					break;
 				}
-			}
-			
-			if( x > game.table_edge[2]-game.ball_diameter/2||
-				x < game.table_edge[0]+game.ball_diameter/2||
-				y > game.table_edge[3]-game.ball_diameter/2||
-				y < game.table_edge[1]+game.ball_diameter/2) {
-				valid=false;
-			}
 
-			if(valid) {
-				game.balls.add(0,new Ball(x,y,0,0,game.ball_diameter,0));
-				game.state = gameState.ChoosingDir;
-			}
-		}
-		
-		else if(game.state == gameState.MovingQueueBallInit) {
-			if(!(x > game.table_edge[2]-game.ball_diameter/2||
-					x < game.table_edge[0]+game.ball_diameter/2||
-					y > game.table_edge[3]-game.ball_diameter/2||
-					y < game.table_edge[1]+game.ball_diameter/2)) {
-
-				if(x < game.table_edge[2]-(game.table_edge[2]-game.table_edge[0])/4) {
-					game.balls.add(0,new Ball(game.table_edge[2]-(game.table_edge[2]-game.table_edge[0])/4,y,0,0,game.ball_diameter,0));
-					game.state = gameState.ChoosingDir;
-				}
-				else {
+				if(valid) {
 					game.balls.add(0,new Ball(x,y,0,0,game.ball_diameter,0));
 					game.state = gameState.ChoosingDir;
+				}
+			}
+
+			else if(game.state == gameState.MovingQueueBallInit) {
+				if(!(x > game.table_edge[2]-game.ball_diameter/2||
+						x < game.table_edge[0]+game.ball_diameter/2||
+						y > game.table_edge[3]-game.ball_diameter/2||
+						y < game.table_edge[1]+game.ball_diameter/2)) {
+
+					if(x < game.table_edge[2]-(game.table_edge[2]-game.table_edge[0])/4) {
+						game.balls.add(0,new Ball(game.table_edge[2]-(game.table_edge[2]-game.table_edge[0])/4,y,0,0,game.ball_diameter,0));
+						game.state = gameState.ChoosingDir;
+					}
+					else {
+						game.balls.add(0,new Ball(x,y,0,0,game.ball_diameter,0));
+						game.state = gameState.ChoosingDir;
+					}
 				}
 			}
 		}

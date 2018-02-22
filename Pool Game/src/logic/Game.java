@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
 
+import logic.Game.gameState;
+
 
 public class Game {
 	
@@ -41,6 +43,8 @@ public int balls_left_group_2;
 
 public group_of_balls player1;
 public boolean player1_turn;
+
+public boolean ai=false;
 
 //real ball size 5.7 cm 
 //real table size 2.84 m x 1.42 m
@@ -222,6 +226,277 @@ public void update(double t){
 	update_table_collisions();
 	update_hole_collisions();
 	update_game_state();
+	play_ai();
+}
+
+public void play_ai() {
+	if(!player1_turn && ai) {
+		if(state == gameState.MovingQueueBall) {
+			boolean valid=false;
+
+			while(!valid) {
+				valid = true;
+				
+				int x = (int)table_edge[0] + new Random().nextInt((int)(table_edge[2]-table_edge[0]+1));
+				int y = (int)table_edge[1] + new Random().nextInt((int)(table_edge[3]-table_edge[1]+1));
+
+				for(int i=0; i< balls.size(); i++) {
+					if(Math.sqrt(Math.pow(balls.get(i).pos[0]-x,2) + Math.pow(balls.get(i).pos[1]-y,2)) < ball_diameter){
+						valid=false;
+						break;
+					}
+				}
+
+				if( x > table_edge[2]-ball_diameter/2||
+						x < table_edge[0]+ball_diameter/2||
+						y > table_edge[3]-ball_diameter/2||
+						y < table_edge[1]+ball_diameter/2) {
+					valid=false;
+				}
+
+				if(valid) {
+					balls.add(0,new Ball(x,y,0,0,ball_diameter,0));
+					state = gameState.ChoosingDir;
+				}
+			}
+		}
+		
+		if(state == gameState.ChoosingDir) {
+			Vector<double[]> points=new Vector<double[]>();
+			points.add(new double[]{table_edge[0]+10, table_edge[1]+10});
+			points.add(new double[]{(table_edge[2]+table_edge[0])/2, table_edge[1]+10});
+			points.add(new double[]{table_edge[2]-10, table_edge[1]+10});
+			points.add(new double[]{table_edge[2]-10, table_edge[3]-10});
+			points.add(new double[]{(table_edge[2]+table_edge[0])/2, table_edge[3]-10});
+			points.add(new double[]{table_edge[0]+10, table_edge[3]-10});
+
+			if(player1 == group_of_balls.Group_1) {
+				for(int i = 1; i< balls.size(); i++) {
+					if((balls.get(i).number>=9 && balls.get(i).number<=15 && balls_left_group_2 > 0) || (balls_left_group_2 == 0 && balls.get(i).number == 8)) {
+						for(int i2 =0 ; i2< points.size(); i2++) {
+							double vec_x;
+							double vec_y;
+							double vec_t;
+							
+							double vec2_x;
+							double vec2_y;
+							double vec2_t;
+							
+							double target_x;
+							double target_y;
+							
+							double angle;
+							
+							vec_x=points.get(i2)[0]-balls.get(i).pos[0];
+							vec_y=points.get(i2)[1]-balls.get(i).pos[1];
+							vec_t=Math.sqrt(Math.pow(vec_x, 2)+Math.pow(vec_y, 2));
+							
+							vec_x/=vec_t;
+							vec_y/=vec_t;
+							
+							target_x=balls.get(i).pos[0]-(vec_x*ball_diameter);
+							target_y=balls.get(i).pos[1]-(vec_y*ball_diameter);
+							
+							
+							vec2_x=target_x-balls.get(0).pos[0];
+							vec2_y=target_y-balls.get(0).pos[1];
+							vec2_t=Math.sqrt(Math.pow(vec2_x, 2)+Math.pow(vec2_y, 2));
+							
+							vec2_x/=vec2_t;
+							vec2_y/=vec2_t;
+							
+							
+							angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
+							
+							if(angle < Math.PI/4) {
+								balls.get(0).vel[0]=vec2_x*max_speed*0.25;
+								balls.get(0).vel[1]=vec2_y*max_speed*0.25;
+								
+								hit_ball=false;
+								hit_player_ball_first=false;
+								ball_8_in_pocket=false;
+								ball_0_in_pocket=false;
+								player_ball_in_pocket=false;
+								state = gameState.BallsMoving;
+								
+								return;
+							}
+							else if((i == balls.size()-1 && i2 == points.size()-1) || (balls_left_group_2 == 0 && balls.get(i).number == 8)) {
+								vec2_x=balls.get(i).pos[0]-balls.get(0).pos[0];
+								vec2_y=balls.get(i).pos[1]-balls.get(0).pos[1];
+								vec2_t=Math.sqrt(Math.pow(vec2_x, 2)+Math.pow(vec2_y, 2));
+								
+								vec2_x/=vec2_t;
+								vec2_y/=vec2_t;
+								
+								balls.get(0).vel[0]=vec2_x*max_speed*0.25;
+								balls.get(0).vel[1]=vec2_y*max_speed*0.25;
+								
+								hit_ball=false;
+								hit_player_ball_first=false;
+								ball_8_in_pocket=false;
+								ball_0_in_pocket=false;
+								player_ball_in_pocket=false;
+								state = gameState.BallsMoving;
+								
+								return;
+							}
+						}
+					}
+				}
+			}
+			else if(player1 == group_of_balls.Group_2) {
+				for(int i = 1; i< balls.size(); i++) {
+					if((balls.get(i).number>=1 && balls.get(i).number<=7 && balls_left_group_1 > 0) || (balls_left_group_1 == 0 && balls.get(i).number == 8)) {
+						for(int i2 =0 ; i2< points.size(); i2++) {
+							double vec_x;
+							double vec_y;
+							double vec_t;
+							
+							double vec2_x;
+							double vec2_y;
+							double vec2_t;
+							
+							double target_x;
+							double target_y;
+							
+							double angle;
+							
+							vec_x=points.get(i2)[0]-balls.get(i).pos[0];
+							vec_y=points.get(i2)[1]-balls.get(i).pos[1];
+							vec_t=Math.sqrt(Math.pow(vec_x, 2)+Math.pow(vec_y, 2));
+							
+							vec_x/=vec_t;
+							vec_y/=vec_t;
+							
+							target_x=balls.get(i).pos[0]-(vec_x*ball_diameter);
+							target_y=balls.get(i).pos[1]-(vec_y*ball_diameter);
+							
+							
+							vec2_x=target_x-balls.get(0).pos[0];
+							vec2_y=target_y-balls.get(0).pos[1];
+							vec2_t=Math.sqrt(Math.pow(vec2_x, 2)+Math.pow(vec2_y, 2));
+							
+							vec2_x/=vec2_t;
+							vec2_y/=vec2_t;
+							
+							
+							angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
+							
+							if(angle < Math.PI/4) {
+								balls.get(0).vel[0]=vec2_x*max_speed*0.25;
+								balls.get(0).vel[1]=vec2_y*max_speed*0.25;
+								
+								hit_ball=false;
+								hit_player_ball_first=false;
+								ball_8_in_pocket=false;
+								ball_0_in_pocket=false;
+								player_ball_in_pocket=false;
+								state = gameState.BallsMoving;
+								
+								return;
+							}
+							else if((i == balls.size()-1 && i2 == points.size()-1) || (balls_left_group_1 == 0 && balls.get(i).number == 8)) {
+								vec2_x=balls.get(i).pos[0]-balls.get(0).pos[0];
+								vec2_y=balls.get(i).pos[1]-balls.get(0).pos[1];
+								vec2_t=Math.sqrt(Math.pow(vec2_x, 2)+Math.pow(vec2_y, 2));
+								
+								vec2_x/=vec2_t;
+								vec2_y/=vec2_t;
+								
+								balls.get(0).vel[0]=vec2_x*max_speed*0.25;
+								balls.get(0).vel[1]=vec2_y*max_speed*0.25;
+								
+								hit_ball=false;
+								hit_player_ball_first=false;
+								ball_8_in_pocket=false;
+								ball_0_in_pocket=false;
+								player_ball_in_pocket=false;
+								state = gameState.BallsMoving;
+								
+								return;
+							}
+						}
+					}
+				}
+			}
+			else {
+				for(int i = 1; i< balls.size(); i++) {
+					if(balls.get(i).number!=8) {
+						for(int i2 =0 ; i2< points.size(); i2++) {
+							double vec_x;
+							double vec_y;
+							double vec_t;
+							
+							double vec2_x;
+							double vec2_y;
+							double vec2_t;
+							
+							double target_x;
+							double target_y;
+							
+							double angle;
+							
+							vec_x=points.get(i2)[0]-balls.get(i).pos[0];
+							vec_y=points.get(i2)[1]-balls.get(i).pos[1];
+							vec_t=Math.sqrt(Math.pow(vec_x, 2)+Math.pow(vec_y, 2));
+							
+							vec_x/=vec_t;
+							vec_y/=vec_t;
+							
+							target_x=balls.get(i).pos[0]-(vec_x*ball_diameter);
+							target_y=balls.get(i).pos[1]-(vec_y*ball_diameter);
+							
+							
+							vec2_x=target_x-balls.get(0).pos[0];
+							vec2_y=target_y-balls.get(0).pos[1];
+							vec2_t=Math.sqrt(Math.pow(vec2_x, 2)+Math.pow(vec2_y, 2));
+							
+							vec2_x/=vec2_t;
+							vec2_y/=vec2_t;
+							
+							
+							angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
+							
+							if(angle < Math.PI/4) {
+								balls.get(0).vel[0]=vec2_x*max_speed*0.25;
+								balls.get(0).vel[1]=vec2_y*max_speed*0.25;
+								
+								hit_ball=false;
+								hit_player_ball_first=false;
+								ball_8_in_pocket=false;
+								ball_0_in_pocket=false;
+								player_ball_in_pocket=false;
+								state = gameState.BallsMoving;
+								
+								return;
+							}
+							else if(i == balls.size()-1 && i2 == points.size()-1) {
+								vec2_x=balls.get(i).pos[0]-balls.get(0).pos[0];
+								vec2_y=balls.get(i).pos[1]-balls.get(0).pos[1];
+								vec2_t=Math.sqrt(Math.pow(vec2_x, 2)+Math.pow(vec2_y, 2));
+								
+								vec2_x/=vec2_t;
+								vec2_y/=vec2_t;
+								
+								balls.get(0).vel[0]=vec2_x*max_speed*0.25;
+								balls.get(0).vel[1]=vec2_y*max_speed*0.25;
+								
+								hit_ball=false;
+								hit_player_ball_first=false;
+								ball_8_in_pocket=false;
+								ball_0_in_pocket=false;
+								player_ball_in_pocket=false;
+								state = gameState.BallsMoving;
+								
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 public void update_game_state() {
@@ -267,7 +542,7 @@ public void update_game_state() {
 public void update_hole_collisions() {
 	for(int i=0;i< balls.size();i++){
 		for(int i2=0; i2 < pockets.size(); i2++) {
-			if(Math.sqrt(Math.pow(balls.get(i).pos[0]-pockets.get(i2).pos[0],2) + Math.pow(balls.get(i).pos[1]-pockets.get(i2).pos[1],2)) < pocket_diameter/2) {
+			if(Math.sqrt(Math.pow(balls.get(i).pos[0]-pockets.get(i2).pos[0],2) + Math.pow(balls.get(i).pos[1]-pockets.get(i2).pos[1],2)) <= pocket_diameter/2) {
 				
 				if(player1 == group_of_balls.Not_picked) {
 					if(player1_turn) {
@@ -404,7 +679,7 @@ public boolean check_line_table_collision(double[] p4,double[] p1, Ball b) {
 	x=p4[0]+k*(p1[0]-p4[0]);
 	y=p4[1]+k*(p1[1]-p4[1]);
 
-	if(Math.sqrt(Math.pow(b.pos[0]-x,2) + Math.pow(b.pos[1]-y,2)) < ball_diameter/2) {
+	if(Math.sqrt(Math.pow(b.pos[0]-x,2) + Math.pow(b.pos[1]-y,2)) <= ball_diameter/2) {
 		distance=Math.sqrt(Math.pow(p1[0]-p4[0],2) + Math.pow(p1[1]-p4[1],2));
 		if(Math.sqrt(Math.pow(p1[0]-x,2) + Math.pow(p1[1]-y,2)) <= distance && Math.sqrt(Math.pow(p4[0]-x,2) + Math.pow(p4[1]-y,2)) <= distance) {
 			vector_x= x-b.pos[0];
@@ -437,7 +712,7 @@ public boolean check_point_table_collision(double[] p1, Ball b) {
 	
 	double eVel=0;
 	
-	if(Math.sqrt(Math.pow(p1[0]-b.pos[0],2) + Math.pow(p1[1]-b.pos[1],2)) < ball_diameter/2) {
+	if(Math.sqrt(Math.pow(p1[0]-b.pos[0],2) + Math.pow(p1[1]-b.pos[1],2)) <= ball_diameter/2) {
 		ex=p1[0]-b.pos[0];
 		ey=p1[1]-b.pos[1];
 
@@ -486,7 +761,7 @@ public void update_ball_collisions(){
 			r=Math.sqrt(dx*dx+dy*dy);
 			targetDistance=(balls.get(i).diameter+balls.get(i2).diameter)/2;
 
-			if(r<targetDistance){
+			if(r<=targetDistance){
 
 				ex[0]=dx/r;
 				ex[1]=dy/r;
