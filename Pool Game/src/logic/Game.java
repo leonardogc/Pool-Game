@@ -264,10 +264,10 @@ public void play_ai() {
 		if(state == gameState.ChoosingDir) {
 			Vector<double[]> points=new Vector<double[]>();
 			points.add(new double[]{table_edge[0]+10, table_edge[1]+10});
-			points.add(new double[]{(table_edge[2]+table_edge[0])/2, table_edge[1]+10});
+			points.add(new double[]{(table_edge[2]+table_edge[0])/2, table_edge[1]+5});
 			points.add(new double[]{table_edge[2]-10, table_edge[1]+10});
 			points.add(new double[]{table_edge[2]-10, table_edge[3]-10});
-			points.add(new double[]{(table_edge[2]+table_edge[0])/2, table_edge[3]-10});
+			points.add(new double[]{(table_edge[2]+table_edge[0])/2, table_edge[3]-5});
 			points.add(new double[]{table_edge[0]+10, table_edge[3]-10});
 
 			if(player1 == group_of_balls.Group_1) {
@@ -308,7 +308,7 @@ public void play_ai() {
 							
 							angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
 							
-							if(angle < Math.PI/4) {
+							if(angle < Math.PI/2) {
 								balls.get(0).vel[0]=vec2_x*max_speed*0.25;
 								balls.get(0).vel[1]=vec2_y*max_speed*0.25;
 								
@@ -383,7 +383,7 @@ public void play_ai() {
 							
 							angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
 							
-							if(angle < Math.PI/4) {
+							if(angle < Math.PI/2) {
 								balls.get(0).vel[0]=vec2_x*max_speed*0.25;
 								balls.get(0).vel[1]=vec2_y*max_speed*0.25;
 								
@@ -458,7 +458,7 @@ public void play_ai() {
 							
 							angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
 							
-							if(angle < Math.PI/4) {
+							if(angle < Math.PI/2) {
 								balls.get(0).vel[0]=vec2_x*max_speed*0.25;
 								balls.get(0).vel[1]=vec2_y*max_speed*0.25;
 								
