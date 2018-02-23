@@ -414,8 +414,8 @@ public void play_ai() {
 
 				angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
 
-				balls.get(0).vel[0]=vec2_x*max_speed*(0.35*Math.sin(angle)+0.15);
-				balls.get(0).vel[1]=vec2_y*max_speed*(0.35*Math.sin(angle)+0.15);
+				balls.get(0).vel[0]=vec2_x*max_speed*(0.25*Math.sin(angle)+0.10);
+				balls.get(0).vel[1]=vec2_y*max_speed*(0.25*Math.sin(angle)+0.10);
 
 				hit_ball=false;
 				hit_player_ball_first=false;
@@ -423,8 +423,6 @@ public void play_ai() {
 				ball_0_in_pocket=false;
 				player_ball_in_pocket=false;
 				state = gameState.BallsMoving;
-				
-				System.out.println("best case!");
 
 				return;
 			}
@@ -458,7 +456,6 @@ public void play_ai() {
 				player_ball_in_pocket=false;
 				state = gameState.BallsMoving;
 				
-				System.out.println("meh");
 				return;
 			}
 			
@@ -486,7 +483,6 @@ public void play_ai() {
 			player_ball_in_pocket=false;
 			state = gameState.BallsMoving;
 			
-			System.out.println("fucking crap!");
 			return;
 			}
 		}
