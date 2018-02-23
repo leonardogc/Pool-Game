@@ -307,56 +307,74 @@ public void play_ai() {
 			int best_point = -1;
 			double best_angle = Math.PI;
 			
-			for(int i = 0; i< balls_g.size(); i++) {
-				for(int i2 =0 ; i2< points.size(); i2++) {
-					
-					if(check_balls_line_collision(balls_g.get(i).pos, points.get(i2)) > 1) {
-						continue;
-					}
-					
-					double vec_x;
-					double vec_y;
-					double vec_t;
+			double max_angle = Math.PI/3;
+			boolean try_again = true;
+			int tries = 0;
+			
+			while(try_again) {
 
-					double vec2_x;
-					double vec2_y;
-					double vec2_t;
+				for(int i = 0; i< balls_g.size(); i++) {
+					for(int i2 =0 ; i2< points.size(); i2++) {
 
-					double target_x;
-					double target_y;
-
-					double angle;
-
-					vec_x=points.get(i2)[0]-balls_g.get(i).pos[0];
-					vec_y=points.get(i2)[1]-balls_g.get(i).pos[1];
-					vec_t=Math.sqrt(Math.pow(vec_x, 2)+Math.pow(vec_y, 2));
-
-					vec_x/=vec_t;
-					vec_y/=vec_t;
-
-					target_x=balls_g.get(i).pos[0]-(vec_x*ball_diameter);
-					target_y=balls_g.get(i).pos[1]-(vec_y*ball_diameter);
-					
-					if(check_balls_line_collision(balls.get(0).pos, new double[] {target_x, target_y}) > 1) {
-						continue;
-					}
-
-					vec2_x=target_x-balls.get(0).pos[0];
-					vec2_y=target_y-balls.get(0).pos[1];
-					vec2_t=Math.sqrt(Math.pow(vec2_x, 2)+Math.pow(vec2_y, 2));
-
-					vec2_x/=vec2_t;
-					vec2_y/=vec2_t;
-
-
-					angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
-
-					if(angle < Math.PI/3) {
-						if(best_angle > angle) {
-							best_angle = angle;
-							best_ball=i;
-							best_point=i2;
+						if(check_balls_line_collision(balls_g.get(i).pos, points.get(i2)) > 1) {
+							continue;
 						}
+
+						double vec_x;
+						double vec_y;
+						double vec_t;
+
+						double vec2_x;
+						double vec2_y;
+						double vec2_t;
+
+						double target_x;
+						double target_y;
+
+						double angle;
+
+						vec_x=points.get(i2)[0]-balls_g.get(i).pos[0];
+						vec_y=points.get(i2)[1]-balls_g.get(i).pos[1];
+						vec_t=Math.sqrt(Math.pow(vec_x, 2)+Math.pow(vec_y, 2));
+
+						vec_x/=vec_t;
+						vec_y/=vec_t;
+
+						target_x=balls_g.get(i).pos[0]-(vec_x*ball_diameter);
+						target_y=balls_g.get(i).pos[1]-(vec_y*ball_diameter);
+
+						if(check_balls_line_collision(balls.get(0).pos, new double[] {target_x+vec_x*0.1, target_y+vec_y*0.1}) > 2) {
+							continue;
+						}
+
+						vec2_x=target_x-balls.get(0).pos[0];
+						vec2_y=target_y-balls.get(0).pos[1];
+						vec2_t=Math.sqrt(Math.pow(vec2_x, 2)+Math.pow(vec2_y, 2));
+
+						vec2_x/=vec2_t;
+						vec2_y/=vec2_t;
+
+
+						angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
+
+						if(angle < max_angle) {
+							if(best_angle > angle) {
+								best_angle = angle;
+								best_ball=i;
+								best_point=i2;
+								try_again=false;
+							}
+						}
+					}
+				}
+
+				if(try_again) {
+					if(tries==0) {
+						max_angle = Math.PI/2;
+						tries++;
+					}
+					else {
+						try_again=false;
 					}
 				}
 			}
@@ -413,88 +431,66 @@ public void play_ai() {
 
 
 			for(int i = 0; i< balls_g.size(); i++) {
-				for(int i2 =0 ; i2< points.size(); i2++) {
-					
-					if(check_balls_line_collision(balls_g.get(i).pos, points.get(i2)) > 1) {
-						continue;
-					}
-					
-					double vec_x;
-					double vec_y;
-					double vec_t;
 
-					double vec2_x;
-					double vec2_y;
-					double vec2_t;
-
-					double target_x;
-					double target_y;
-
-					double angle;
-
-					vec_x=points.get(i2)[0]-balls_g.get(i).pos[0];
-					vec_y=points.get(i2)[1]-balls_g.get(i).pos[1];
-					vec_t=Math.sqrt(Math.pow(vec_x, 2)+Math.pow(vec_y, 2));
-
-					vec_x/=vec_t;
-					vec_y/=vec_t;
-
-					target_x=balls_g.get(i).pos[0]-(vec_x*ball_diameter);
-					target_y=balls_g.get(i).pos[1]-(vec_y*ball_diameter);
-
-					if(check_balls_line_collision(balls.get(0).pos, new double[] {target_x, target_y}) > 1) {
-						continue;
-					}
-
-					vec2_x=target_x-balls.get(0).pos[0];
-					vec2_y=target_y-balls.get(0).pos[1];
-					vec2_t=Math.sqrt(Math.pow(vec2_x, 2)+Math.pow(vec2_y, 2));
-
-					vec2_x/=vec2_t;
-					vec2_y/=vec2_t;
-
-
-					angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
-
-					if(angle < Math.PI/2) {
-						balls.get(0).vel[0]=vec2_x*max_speed*(0.35*Math.sin(angle)+0.15);
-						balls.get(0).vel[1]=vec2_y*max_speed*(0.35*Math.sin(angle)+0.15);
-
-						hit_ball=false;
-						hit_player_ball_first=false;
-						ball_8_in_pocket=false;
-						ball_0_in_pocket=false;
-						player_ball_in_pocket=false;
-						state = gameState.BallsMoving;
-
-						return;
-					}
-					else if(i == balls_g.size()-1 && i2 == points.size()-1) {
-						vec2_x=balls_g.get(i).pos[0]-balls.get(0).pos[0];
-						vec2_y=balls_g.get(i).pos[1]-balls.get(0).pos[1];
-						vec2_t=Math.sqrt(Math.pow(vec2_x, 2)+Math.pow(vec2_y, 2));
-
-						vec2_x/=vec2_t;
-						vec2_y/=vec2_t;
-
-						balls.get(0).vel[0]=vec2_x*max_speed*0.5;
-						balls.get(0).vel[1]=vec2_y*max_speed*0.5;
-
-						hit_ball=false;
-						hit_player_ball_first=false;
-						ball_8_in_pocket=false;
-						ball_0_in_pocket=false;
-						player_ball_in_pocket=false;
-						state = gameState.BallsMoving;
-
-						return;
-					}
+				if(check_balls_line_collision(balls.get(0).pos, balls_g.get(i).pos) > 2) {
+					continue;
 				}
-			}
 
+				double vec_x;
+				double vec_y;
+				double vec_t;
+
+				vec_x=balls_g.get(i).pos[0]-balls.get(0).pos[0];
+				vec_y=balls_g.get(i).pos[1]-balls.get(0).pos[1];
+				vec_t=Math.sqrt(Math.pow(vec_x, 2)+Math.pow(vec_y, 2));
+
+				vec_x/=vec_t;
+				vec_y/=vec_t;
+
+
+				balls.get(0).vel[0]=vec_x*max_speed*0.25;
+				balls.get(0).vel[1]=vec_y*max_speed*0.25;
+
+				hit_ball=false;
+				hit_player_ball_first=false;
+				ball_8_in_pocket=false;
+				ball_0_in_pocket=false;
+				player_ball_in_pocket=false;
+				state = gameState.BallsMoving;
+				
+				System.out.println("meh");
+				return;
+			}
+			
+			double vec_x;
+			double vec_y;
+			double vec_t;
+			
+			int i = new Random().nextInt(balls_g.size());
+
+			vec_x=balls_g.get(i).pos[0]-balls.get(0).pos[0];
+			vec_y=balls_g.get(i).pos[1]-balls.get(0).pos[1];
+			vec_t=Math.sqrt(Math.pow(vec_x, 2)+Math.pow(vec_y, 2));
+
+			vec_x/=vec_t;
+			vec_y/=vec_t;
+
+
+			balls.get(0).vel[0]=vec_x*max_speed*0.25;
+			balls.get(0).vel[1]=vec_y*max_speed*0.25;
+
+			hit_ball=false;
+			hit_player_ball_first=false;
+			ball_8_in_pocket=false;
+			ball_0_in_pocket=false;
+			player_ball_in_pocket=false;
+			state = gameState.BallsMoving;
+			
+			System.out.println("fucking crap!");
+			return;
+			}
 		}
 	}
-}
 
 public int check_balls_line_collision(double[] p4,double[] p1) {
 		double vector_x=0;
