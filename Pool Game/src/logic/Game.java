@@ -418,8 +418,8 @@ public void play_ai() {
 
 				angle=Math.acos(vec_x*vec2_x+vec_y*vec2_y);
 
-				balls.get(0).vel[0]=vec2_x*max_speed*(0.3*Math.pow(Math.sin(angle),4)+0.10);
-				balls.get(0).vel[1]=vec2_y*max_speed*(0.3*Math.pow(Math.sin(angle),4)+0.10);
+				balls.get(0).vel[0]=vec2_x*(max_speed*0.15)/Math.cos(angle);
+				balls.get(0).vel[1]=vec2_y*(max_speed*0.15)/Math.cos(angle);
 
 				hit_ball=false;
 				hit_player_ball_first=false;
