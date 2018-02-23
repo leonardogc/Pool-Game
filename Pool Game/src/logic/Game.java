@@ -266,10 +266,10 @@ public void play_ai() {
 			
 			Vector<double[]> points=new Vector<double[]>();
 			points.add(new double[]{table_edge[0]+add, table_edge[1]+add});
-			points.add(new double[]{(table_edge[2]+table_edge[0])/2, table_edge[1]+add/3});
+			points.add(new double[]{(table_edge[2]+table_edge[0])/2, table_edge[1]+add/4});
 			points.add(new double[]{table_edge[2]-add, table_edge[1]+add});
 			points.add(new double[]{table_edge[2]-add, table_edge[3]-add});
-			points.add(new double[]{(table_edge[2]+table_edge[0])/2, table_edge[3]-add/3});
+			points.add(new double[]{(table_edge[2]+table_edge[0])/2, table_edge[3]-add/4});
 			points.add(new double[]{table_edge[0]+add, table_edge[3]-add});
 
 			Vector<Ball> balls_g=new Vector<Ball>();
@@ -307,7 +307,7 @@ public void play_ai() {
 			int best_point = -1;
 			double best_angle = Math.PI;
 			
-			double max_angle = Math.PI/3;
+			double max_angle = Math.PI/4;
 			boolean try_again = true;
 			int tries = 0;
 			
@@ -370,6 +370,10 @@ public void play_ai() {
 
 				if(try_again) {
 					if(tries==0) {
+						max_angle = Math.PI/3;
+						tries++;
+					}
+					else if(tries==1){
 						max_angle = Math.PI/2;
 						tries++;
 					}
