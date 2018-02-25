@@ -171,7 +171,7 @@ public class GraphicsAndListeners extends JPanel implements KeyListener, MouseLi
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		graphics.panel.requestFocusInWindow();
+		graphics.panel.requestFocus();
 		if(c.turn==1) {
 			if(c.state == gameState.ChoosingDir) {
 					try {
