@@ -379,12 +379,10 @@ public void check_table_collision(Ball b, TableSide s) {
 	}
 }
 
+
 public boolean check_line_table_collision(double[] p1,double[] p2, Ball b) {
 	double vector_x=0;
 	double vector_y=0;
-	
-	double vector_x2=0;
-	double vector_y2=0;
 	
 	double vector_t=0;
 	
@@ -399,20 +397,17 @@ public boolean check_line_table_collision(double[] p1,double[] p2, Ball b) {
 	vector_x=p2[0]-p1[0];
 	vector_y=p2[1]-p1[1];
 
-	vector_x2=vector_y;
-	vector_y2=-vector_x;
+	vector_t=Math.sqrt(Math.pow(vector_x,2) + Math.pow(vector_y,2));
 
-	vector_t=Math.sqrt(Math.pow(vector_x2,2) + Math.pow(vector_y2,2));
+	vector_x/=vector_t;
+	vector_y/=vector_t;
+	
+	k=vector_x*(b.pos[0]-p1[0])+vector_y*(b.pos[1]-p1[1]);
 
-	vector_x2/=vector_t;
-	vector_y2/=vector_t;
+	x=p1[0]+k*vector_x;
+	y=p1[1]+k*vector_y;
 
-	k=(vector_y2*(b.pos[0]-p1[0])+vector_x2*(p1[1]-b.pos[1]))/(vector_y2*(p2[0]-p1[0])-vector_x2*(p2[1]-p1[1]));
-
-	x=p1[0]+k*(p2[0]-p1[0]);
-	y=p1[1]+k*(p2[1]-p1[1]);
-
-	if(Math.sqrt(Math.pow(b.pos[0]-x,2) + Math.pow(b.pos[1]-y,2)) < ball_diameter/2) {
+	if(Math.sqrt(Math.pow(b.pos[0]-x,2) + Math.pow(b.pos[1]-y,2)) <= ball_diameter/2) {
 		distance=Math.sqrt(Math.pow(p2[0]-p1[0],2) + Math.pow(p2[1]-p1[1],2));
 		if(Math.sqrt(Math.pow(p2[0]-x,2) + Math.pow(p2[1]-y,2)) <= distance && Math.sqrt(Math.pow(p1[0]-x,2) + Math.pow(p1[1]-y,2)) <= distance) {
 			vector_x= x-b.pos[0];
